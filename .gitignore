@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 
 .chalice/deployments/
+app/config.py
