@@ -1,13 +1,28 @@
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Index, Integer, SmallInteger, String, text
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Index, Integer, SmallInteger, String, text, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import enum
 
 Base = declarative_base()
 metadata = Base.metadata
 
+class GenderEnum(enum.Enum):
+    M = "M"
+    m = "M"
+    F = "F"
+    f = "F"
+
 class Address(Base):
     __tablename__ = "Address"
-    pass
+
+    AddressId = Column(Integer, primary_key=True)
+    Suburb = Column(String(30), nullable=False)
+    Country = Column(String(30), nullable=False)
+    State = Column(String(15), nullable=False)
+    Postcode = Column(Integer, nullable=False)
+    Street = Column(String(50), nullable=False)
+    Unit = Column(String(30), nullable=False)
+
 
 class Appointment(Base):
     __tablename__ = "Appointment"
@@ -15,7 +30,19 @@ class Appointment(Base):
 
 class Doctor(Base):
     __tablename__ = "Doctor"
-    pass
+
+    Doctor_Id = Column(Integer, primary_key=True)
+    First_Name = Column(String(30), nullable=False)
+    Last_Name = Column(String(30), nullable=False)
+    Gender = Column(Enum(enum), nullable=False)
+    Age = Column(SmallInteger, nullable=False)
+    Contact_Number = Column(String(15), nullable=False)
+    Email = Column(String(50), nullable=False)
+    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    User_Id = Column(String(50), nullable=False)
+
+    address = relationship('Address')
+
 
 class MedicalCase(Base):
     __tablename__ = "MedicalCase"
@@ -27,9 +54,32 @@ class MedicalCaseDoctors(Base):
 
 class Patient(Base):
     __tablename__ = "Patient"
-    pass
+
+    Doctor_Id = Column(Integer, primary_key=True)
+    First_Name = Column(String(30), nullable=False)
+    Last_Name = Column(String(30), nullable=False)
+    Gender = Column(Enum(enum), nullable=False)
+    Age = Column(SmallInteger, nullable=False)
+    Contact_Number = Column(String(15), nullable=False)
+    Email = Column(String(50), nullable=False)
+    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    User_Id = Column(String(50), nullable=False)
+
+    address = relationship('Address')
+
 
 class Receptionist(Base):
     __tablename__ = "Receptionist"
-    pass
+
+    Receptionist_Id = Column(Integer, primary_key=True)
+    First_Name = Column(String(30), nullable=False)
+    Last_Name = Column(String(30), nullable=False)
+    Gender = Column(Enum(enum), nullable=False)
+    Age = Column(SmallInteger, nullable=False)
+    Contact_Number = Column(String(15), nullable=False)
+    Email = Column(String(50), nullable=False)
+    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    User_Id = Column(String(50), nullable=False)
+
+    address = relationship('Address')
 
