@@ -1,11 +1,27 @@
+import json
+
 from chalice import Chalice
+from db.orm import DoctorStore
 
 app = Chalice(app_name='quorum')
 
-
 @app.route('/')
 def index():
-    return {'hello': 'world'}
+    return { "Hello": "World" }
+
+@app.route('/doctors/{id}')
+def get_doctor(id):
+    print("GOT ID...")
+    print(id)
+
+    doctor_store = DoctorStore()
+    doctor_id = 1
+
+    print("[*] Getting doctor by id...")
+    doctor = doctor_store.get_doctor(doctor_id)
+    print(">> GOT DOCTOR <<")
+    print(doctor)
+    return json.dumps(doctor)
 
 
 # The view function above will return {"hello": "world"}
