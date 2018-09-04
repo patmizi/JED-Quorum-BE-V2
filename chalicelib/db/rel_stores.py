@@ -30,7 +30,14 @@ class DoctorStore(MySqlStore):
             return self.normalize(entity)
 
     def get_doctor(self, doctor_id):
+        print("DOCTOR ID TO QUERY")
+        print(doctor_id)
         with DatabaseSession() as session:
+            print("CREATED SESSION. WE GUCCI")
             query = session.query(Doctor).filter(Doctor.Doctor_Id == doctor_id)
+            print("DOES IT BREAK HERE???")
+            print(query)
             data = query.all()
+            print("DATA")
+            print(query)
             return data

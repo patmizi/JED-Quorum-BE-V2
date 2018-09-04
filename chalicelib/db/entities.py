@@ -24,9 +24,9 @@ class Address(Base):
     Unit = Column(String(30), nullable=False)
 
 
-class Appointment(Base):
-    __tablename__ = "Appointment"
-    pass
+# class Appointment(Base):
+#     __tablename__ = "Appointment"
+#     pass
 
 class Doctor(Base):
     __tablename__ = "Doctor"
@@ -34,23 +34,23 @@ class Doctor(Base):
     Doctor_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(enum), nullable=False)
+    Gender = Column(Enum(GenderEnum), nullable=False)
     Age = Column(SmallInteger, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
-    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    # Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    address = relationship('Address')
+    # address = relationship('Address')
 
 
-class MedicalCase(Base):
-    __tablename__ = "MedicalCase"
-    pass
+# class MedicalCase(Base):
+#     __tablename__ = "MedicalCase"
+#     pass
 
-class MedicalCaseDoctors(Base):
-    __tablename__ = "MedicalCaseDoctors"
-    pass
+# class MedicalCaseDoctors(Base):
+#     __tablename__ = "MedicalCaseDoctors"
+#     pass
 
 class Patient(Base):
     __tablename__ = "Patient"
@@ -58,7 +58,7 @@ class Patient(Base):
     Doctor_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(enum), nullable=False)
+    Gender = Column(Enum(GenderEnum), nullable=False)
     Age = Column(SmallInteger, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
@@ -74,7 +74,7 @@ class Receptionist(Base):
     Receptionist_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(enum), nullable=False)
+    Gender = Column(Enum(GenderEnum), nullable=False)
     Age = Column(SmallInteger, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)

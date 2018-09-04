@@ -1,4 +1,4 @@
-from lib.exceptions import ArgumentNullException
+from chalicelib.lib.exceptions import ArgumentNullException
 
 def has_params(data, *args):
     if data is None:

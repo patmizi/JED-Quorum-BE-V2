@@ -1,4 +1,4 @@
-from lib.exceptions import NotFoundException
+from chalicelib.lib.exceptions import NotFoundException
 from . import DatabaseSession
 
 

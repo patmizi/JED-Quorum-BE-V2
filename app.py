@@ -1,15 +1,19 @@
 import json
 
 from chalice import Chalice
-from db.orm import DoctorStore
+from chalicelib.db.rel_stores import DoctorStore
+from chalicelib.lib.encoders import AlchemyEncoder
 
 app = Chalice(app_name='quorum')
+app.debug = True
+
 
 @app.route('/')
 def index():
     return { "Hello": "World" }
 
-@app.route('/doctors/{id}')
+
+@app.route('/doctors/{id}', methods=['GET'], cors=True)
 def get_doctor(id):
     print("GOT ID...")
     print(id)
@@ -21,7 +25,7 @@ def get_doctor(id):
     doctor = doctor_store.get_doctor(doctor_id)
     print(">> GOT DOCTOR <<")
     print(doctor)
-    return json.dumps(doctor)
+    return json.dumps(doctor, cls=AlchemyEncoder)
 
 
 # The view function above will return {"hello": "world"}
@@ -29,15 +33,15 @@ def get_doctor(id):
 #
 # Here are a few more examples:
 #
-# @app.route('/hello/{name}')
+# @con.route('/hello/{name}')
 # def hello_name(name):
 #    # '/hello/james' -> {"hello": "james"}
 #    return {'hello': name}
 #
-# @app.route('/users', methods=['POST'])
+# @con.route('/users', methods=['POST'])
 # def create_user():
 #     # This is the JSON body the user sent in their POST request.
-#     user_as_json = app.current_request.json_body
+#     user_as_json = con.current_request.json_body
 #     # We'll echo the json body back to the user in a 'user' key.
 #     return {'user': user_as_json}
 #
