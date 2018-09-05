@@ -38,7 +38,7 @@ class Doctor(Base):
     Age = Column(SmallInteger, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
-    # Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
     # address = relationship('Address')
@@ -65,7 +65,7 @@ class Patient(Base):
     Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    address = relationship('Address')
+    # address = relationship('Address', backref="Patient")
 
 
 class Receptionist(Base):
@@ -81,5 +81,5 @@ class Receptionist(Base):
     Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    address = relationship('Address')
+    # address = relationship('Address', backref="Receptionist")
 

@@ -1,6 +1,11 @@
+import json
+
+from sqlalchemy.orm import joinedload
+from chalicelib.lib.encoders import AlchemyEncoder
+
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor
+from .entities import Doctor, Address
 
 
 class DoctorStore(MySqlStore):
@@ -30,14 +35,26 @@ class DoctorStore(MySqlStore):
             return self.normalize(entity)
 
     def get_doctor(self, doctor_id):
-        print("DOCTOR ID TO QUERY")
         print(doctor_id)
         with DatabaseSession() as session:
-            print("CREATED SESSION. WE GUCCI")
-            query = session.query(Doctor).filter(Doctor.Doctor_Id == doctor_id)
-            print("DOES IT BREAK HERE???")
-            print(query)
-            data = query.all()
-            print("DATA")
-            print(query)
+            doctor = session.query(Doctor).\
+                filter(Doctor.Doctor_Id == doctor_id)
+            data = doctor.all()
+            if len(data) > 0:
+                address = session.query(Address).\
+                    filter(Address.AddressId == data[0].AddressId)
+                address_data = address.first()
+                setattr(data[0], 'address', address_data)
+
+                print("DATA")
+                # TODO: Not getting correct output. Possible that encoder is not recursing past surface depth
+                print(json.dumps(data, cls=AlchemyEncoder))
             return data
+
+
+    def get_all_doctors(self):
+        with DatabaseSession() as session:
+            query = session.query(Doctor)
+            data = query.all()
+            return data
+

@@ -17,16 +17,20 @@ def index():
 def get_doctor(id):
     print("GOT ID...")
     print(id)
-
     doctor_store = DoctorStore()
-    doctor_id = 1
 
     print("[*] Getting doctor by id...")
-    doctor = doctor_store.get_doctor(doctor_id)
+    doctor = doctor_store.get_doctor(id)
     print(">> GOT DOCTOR <<")
     print(doctor)
     return json.dumps(doctor, cls=AlchemyEncoder)
 
+@app.route('/doctors', methods=['GET'], cors=True)
+def get_doctors():
+    print("[*] Get all doctors...")
+    doctor_store = DoctorStore()
+    doctors = doctor_store.get_all_doctors()
+    return json.dumps(doctors, cls=AlchemyEncoder)
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
