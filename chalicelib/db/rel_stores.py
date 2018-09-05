@@ -1,7 +1,7 @@
 import json
 
 from sqlalchemy.orm import joinedload
-from chalicelib.lib.encoders import AlchemyEncoder
+from chalicelib.lib.encoders import new_alchemy_encoder
 
 from . import DatabaseSession
 from .store import MySqlStore
@@ -45,10 +45,12 @@ class DoctorStore(MySqlStore):
                     filter(Address.AddressId == data[0].AddressId)
                 address_data = address.first()
                 setattr(data[0], 'address', address_data)
+                print("PRINTING ADDRESS FIELD")
+                print(json.dumps(data[0].address, cls=new_alchemy_encoder(), check_circular=False))
 
                 print("DATA")
                 # TODO: Not getting correct output. Possible that encoder is not recursing past surface depth
-                print(json.dumps(data, cls=AlchemyEncoder))
+                print(json.dumps(data, cls=new_alchemy_encoder(), check_circular=False))
             return data
 
 

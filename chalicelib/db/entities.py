@@ -34,7 +34,7 @@ class Doctor(Base):
     Doctor_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(GenderEnum), nullable=False)
+    # Gender = Column(Enum(GenderEnum), nullable=False)
     Age = Column(SmallInteger, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)

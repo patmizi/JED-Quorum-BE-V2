@@ -2,7 +2,7 @@ import json
 
 from chalice import Chalice
 from chalicelib.db.rel_stores import DoctorStore
-from chalicelib.lib.encoders import AlchemyEncoder
+from chalicelib.lib.encoders import new_alchemy_encoder
 
 app = Chalice(app_name='quorum')
 app.debug = True
@@ -23,14 +23,14 @@ def get_doctor(id):
     doctor = doctor_store.get_doctor(id)
     print(">> GOT DOCTOR <<")
     print(doctor)
-    return json.dumps(doctor, cls=AlchemyEncoder)
+    return json.dumps(doctor, cls=new_alchemy_encoder(), check_circular=False)
 
 @app.route('/doctors', methods=['GET'], cors=True)
 def get_doctors():
     print("[*] Get all doctors...")
     doctor_store = DoctorStore()
     doctors = doctor_store.get_all_doctors()
-    return json.dumps(doctors, cls=AlchemyEncoder)
+    return json.dumps(doctors, cls=new_alchemy_encoder(), check_circular=False)
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
