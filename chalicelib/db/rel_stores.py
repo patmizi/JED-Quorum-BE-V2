@@ -5,7 +5,7 @@ from chalicelib.lib.encoders import new_alchemy_encoder
 
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor, Address
+from .entities import Doctor
 
 
 class DoctorStore(MySqlStore):
@@ -40,17 +40,6 @@ class DoctorStore(MySqlStore):
             doctor = session.query(Doctor).\
                 filter(Doctor.Doctor_Id == doctor_id)
             data = doctor.all()
-            if len(data) > 0:
-                address = session.query(Address).\
-                    filter(Address.AddressId == data[0].AddressId)
-                address_data = address.first()
-                setattr(data[0], 'address', address_data)
-                print("PRINTING ADDRESS FIELD")
-                print(json.dumps(data[0].address, cls=new_alchemy_encoder(), check_circular=False))
-
-                print("DATA")
-                # TODO: Not getting correct output. Possible that encoder is not recursing past surface depth
-                print(json.dumps(data, cls=new_alchemy_encoder(), check_circular=False))
             return data
 
 
