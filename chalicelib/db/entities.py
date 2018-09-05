@@ -41,7 +41,7 @@ class Doctor(Base):
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    # address = relationship('Address')
+    address = relationship('Address', lazy="joined")
 
 
 # class MedicalCase(Base):
@@ -65,7 +65,7 @@ class Patient(Base):
     Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    # address = relationship('Address', backref="Patient")
+    address = relationship('Address', lazy="joined")
 
 
 class Receptionist(Base):
@@ -81,5 +81,5 @@ class Receptionist(Base):
     Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    # address = relationship('Address', backref="Receptionist")
+    address = relationship('Address', lazy="joined")
 

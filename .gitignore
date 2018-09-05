@@ -104,3 +104,4 @@ venv.bak/
 
 .chalice/deployments/
 chalicelib/con/config.py
+chalicelib/connection/config.py

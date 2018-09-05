@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from chalicelib.con.config import connection_strings  # Not committed to VCS
+from chalicelib.connection.config import connection_strings  # Not committed to VCS
 
 __all__ = ["DatabaseConnection", "DatabaseSession"]
 
