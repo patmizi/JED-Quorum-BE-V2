@@ -19,9 +19,7 @@ def new_alchemy_encoder():
                 # an SQLAlchemy class
                 fields = {}
                 for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
-                    print(field)
                     if isinstance(obj.__getattribute__(field), date):
-                        print("THIS IS A DATETIME OBJECT")
                         fields[field] = serialize_date(obj.__getattribute__(field))
                     else:
                         fields[field] = obj.__getattribute__(field)

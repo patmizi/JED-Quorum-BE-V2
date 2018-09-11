@@ -68,7 +68,7 @@ def register_user():
     else:
         app.log.error('[x] BUSINESS ROLE NOT FOUND')
         raise ValueError('business_role')
-    return json.dumps(result, cls=new_alchemy_encoder(), check_circular=False)
+    return { "result": "true" }
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
