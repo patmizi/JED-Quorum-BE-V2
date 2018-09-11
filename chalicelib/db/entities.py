@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Index, Integer, SmallInteger, String, text, Enum
+from sqlalchemy import Column, Date, ForeignKey, Integer, SmallInteger, String, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import enum
@@ -35,7 +35,7 @@ class Doctor(Base):
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
     # Gender = Column(Enum(GenderEnum), nullable=False)
-    Age = Column(SmallInteger, nullable=False)
+    Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
@@ -59,7 +59,7 @@ class Patient(Base):
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
     Gender = Column(Enum(GenderEnum), nullable=False)
-    Age = Column(SmallInteger, nullable=False)
+    Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
@@ -74,11 +74,11 @@ class Receptionist(Base):
     Receptionist_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(GenderEnum), nullable=False)
-    Age = Column(SmallInteger, nullable=False)
+    # Gender = Column(Enum(GenderEnum), nullable=False)
+    Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
-    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
     address = relationship('Address', lazy="joined")

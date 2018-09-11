@@ -1,7 +1,9 @@
 import json
 
 from sqlalchemy.ext.declarative import DeclarativeMeta
+from datetime import date
 
+from chalicelib.lib.helpers import serialize_date
 
 def new_alchemy_encoder():
     _visited_objs = []
@@ -17,7 +19,12 @@ def new_alchemy_encoder():
                 # an SQLAlchemy class
                 fields = {}
                 for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
-                    fields[field] = obj.__getattribute__(field)
+                    print(field)
+                    if isinstance(obj.__getattribute__(field), date):
+                        print("THIS IS A DATETIME OBJECT")
+                        fields[field] = serialize_date(obj.__getattribute__(field))
+                    else:
+                        fields[field] = obj.__getattribute__(field)
                 # a json-encodable dict
                 return fields
 
