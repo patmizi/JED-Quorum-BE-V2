@@ -1,7 +1,7 @@
 import json
 
 from chalice import Chalice
-from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, MedicalCaseStore
+from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, PatientStore, MedicalCaseStore
 from chalicelib.lib.encoders import recursive_alchemy_encoder
 
 app = Chalice(app_name='quorum')
@@ -11,6 +11,7 @@ app.debug = True
 @app.route('/')
 def index():
     return {"Hello": "World"}
+
 
 ##
 ## /cases
@@ -22,12 +23,32 @@ def get_medical_case(id):
     print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
-@app.route('/cases', methods=['POST'], cors=True)
-def create_medical_case():
-    medical_case_store = MedicalCaseStore()
-    body_json = app.current_request.json_body
-    print(body_json)
-    return { "Value": True }
+
+# @app.route('/cases', methods=['POST'], cors=True)
+# def create_medical_case():
+#     medical_case_store = MedicalCaseStore()
+#     body_json = app.current_request.json_body
+#     print(body_json)
+#     return { "Value": True }
+
+##
+## /patients
+##
+@app.route('/patients', methods=['GET'], cors=True)
+def get_patients():
+    patient_store = PatientStore()
+    patients = patient_store.get_all_patients()
+    print(patients)
+    return json.dumps(patients, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+@app.route('/patients/{id}', methods=['GET'], cors=True)
+def get_patient(id):
+    patient_store = PatientStore()
+    patient = patient_store.get_patient(id)
+    print(patient)
+    return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
+
 
 ##
 ## /doctors
@@ -93,33 +114,31 @@ def register_user():
     user_metadata = user_json['user']['user_metadata']
     data = {"User_Id": user_json['user']['id']}
     if 'address' in user_metadata:
-        data['address'] = user_metadata['address']
+        data['address'] = user_metadata.get('address')
 
     if user_metadata['business_role'] == 'doctor':
         app.log.info('Registering a doctor...')
         doctor_store = DoctorStore()
         doctor_store.create_doctor(
-            first_name=user_metadata['first_name'],
-            last_name=user_metadata['last_name'],
-            gender="M",
-            date_of_birth=user_metadata['date_of_birth'],
-            contact_number=user_metadata['contact_number'],
-            email=user_metadata['email'],
+            first_name=user_metadata.get('first_name', 'User'),
+            last_name=user_metadata.get('last_name', ''),
+            gender=user_metadata.get('gender', 'M'),
+            date_of_birth=user_metadata.get('date_of_birth', ''),
+            contact_number=user_metadata.get('contact_number', ''),
+            email=user_metadata.get('email', ''),
             data=data
         )
     elif user_metadata['business_role'] == 'receptionist':
         app.log.info('Registering a receptionist')
         receptionist_store = ReceptionistStore()
         receptionist_store.create_receptionist(
-            first_name=user_metadata['first_name'],
-            last_name=user_metadata['last_name'],
-            gender="M",
-            date_of_birth=user_metadata['date_of_birth'],
-            contact_number=user_metadata['contact_number'],
-            email=user_metadata['email'],
-            data={
-                "User_Id": user_json['user']['id']
-            }
+            first_name=user_metadata.get('first_name', 'User'),
+            last_name=user_metadata.get('last_name', ''),
+            gender=user_metadata.get('gender', 'M'),
+            date_of_birth=user_metadata.get('date_of_birth', ''),
+            contact_number=user_metadata.get('contact_number', ''),
+            email=user_metadata.get('email', ''),
+            data=data
         )
     else:
         app.log.error('[x] BUSINESS ROLE NOT FOUND')

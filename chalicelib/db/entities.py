@@ -42,7 +42,7 @@ class Doctor(Base):
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors)
+    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, backref="doctors")
     address = relationship('Address', lazy="joined")
 
 
@@ -54,7 +54,7 @@ class MedicalCase(Base):
     Medical_Case_Description = Column(Text, nullable=False)
 
     patient = relationship("Patient", lazy="joined")
-    doctors = relationship('Doctor', secondary=MedicalCaseDoctors)
+    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, backref="medical_cases")
 
 
 class Patient(Base):

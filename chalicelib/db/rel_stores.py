@@ -2,7 +2,7 @@ from chalicelib.lib import helpers
 
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor, Receptionist, Address, MedicalCase
+from .entities import Doctor, Receptionist, Patient, Address, MedicalCase
 
 
 class DoctorStore(MySqlStore):
@@ -97,6 +97,19 @@ class ReceptionistStore(MySqlStore):
         self.update_object(entity=Receptionist, _id=receptionist_id, params=params)
         return self.get_receptionist(receptionist_id)
 
+class PatientStore(MySqlStore):
+    def get_all_patients(self):
+        with DatabaseSession() as session:
+            query = session.query(Patient)
+            data = query.all()
+            return data
+
+    def get_patient(self, patient_id):
+        with DatabaseSession() as session:
+            query = session.query(Patient).\
+                filter(Patient.Patient_Id == patient_id)
+            data = query.all()
+            return data
 
 class MedicalCaseStore(MySqlStore):
     def get_medical_case(self, medical_case_id):
@@ -106,5 +119,25 @@ class MedicalCaseStore(MySqlStore):
             data = query.all()
             return data
 
-    def add_medical_case(self, medical_case_name, medical_case_description):
-        pass
+    def add_medical_case(self, medical_case_name, medical_case_description, patient_data, data):
+        case = MedicalCase(
+            Medical_Case_Name=medical_case_name,
+            Medical_Case_Description=medical_case_description
+        )
+        case.patient = Patient(
+            Patient_Id=patient_data.get('Patient_Id'),
+        )
+        if data.get('doctors') is not None:
+            case.doctors = []
+            for d in data.get('doctors'):
+                case.doctors.append(
+                    Doctor(
+                        Doctor_Id=d.get('Doctor_Id')
+                    )
+                )
+        with DatabaseSession() as session:
+            session.add(case)
+            session.flush()
+            session.commit()
+
+            return self.get_medical_case(case.Medical_Case_Id)
