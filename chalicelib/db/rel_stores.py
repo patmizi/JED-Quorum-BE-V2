@@ -2,7 +2,7 @@ from chalicelib.lib import helpers
 
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor, Receptionist, Address
+from .entities import Doctor, Receptionist, Address, MedicalCase
 
 
 class DoctorStore(MySqlStore):
@@ -96,3 +96,15 @@ class ReceptionistStore(MySqlStore):
     def update_receptionist(self, receptionist_id, params):
         self.update_object(entity=Receptionist, _id=receptionist_id, params=params)
         return self.get_receptionist(receptionist_id)
+
+
+class MedicalCaseStore(MySqlStore):
+    def get_medical_case(self, medical_case_id):
+        with DatabaseSession() as session:
+            query = session.query(MedicalCase). \
+                filter(MedicalCase.Medical_Case_Id == medical_case_id)
+            data = query.all()
+            return data
+
+    def add_medical_case(self, medical_case_name, medical_case_description):
+        pass

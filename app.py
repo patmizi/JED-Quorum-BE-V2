@@ -1,7 +1,7 @@
 import json
 
 from chalice import Chalice
-from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore
+from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, MedicalCaseStore
 from chalicelib.lib.encoders import recursive_alchemy_encoder
 
 app = Chalice(app_name='quorum')
@@ -12,6 +12,22 @@ app.debug = True
 def index():
     return {"Hello": "World"}
 
+##
+## /cases
+##
+@app.route('/cases/{id}', methods=['GET'], cors=True)
+def get_medical_case(id):
+    medical_case_store = MedicalCaseStore()
+    case = medical_case_store.get_medical_case(id)
+    print(case)
+    return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/cases', methods=['POST'], cors=True)
+def create_medical_case():
+    medical_case_store = MedicalCaseStore()
+    body_json = app.current_request.json_body
+    print(body_json)
+    return { "Value": True }
 
 ##
 ## /doctors
