@@ -21,12 +21,14 @@ def get_doctor(id):
     return json.dumps(doctor, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
+
 @app.route('/doctors', methods=['GET'], cors=True)
 def get_doctors():
     print("[*] Get all doctors...")
     doctor_store = DoctorStore()
     doctors = doctor_store.get_all_doctors()
     return json.dumps(doctors, cls=recursive_alchemy_encoder(), check_circular=False)
+
 
 
 @app.route('/receptionists/{id}')
@@ -53,6 +55,10 @@ def register_user():
     print("[*] Registering new user...")
     user_json = app.current_request.json_body
     user_metadata = user_json['user']['user_metadata']
+    data = {"User_Id": user_json['user']['id']}
+    if 'address' in user_metadata:
+        data['address'] = user_metadata['address']
+
     if user_metadata['business_role'] == 'doctor':
         app.log.info('Registering a doctor...')
         doctor_store = DoctorStore()
@@ -63,9 +69,7 @@ def register_user():
             date_of_birth=user_metadata['date_of_birth'],
             contact_number=user_metadata['contact_number'],
             email=user_metadata['email'],
-            data={
-                "User_Id": user_json['user']['id']
-            }
+            data=data
         )
     elif user_metadata['business_role'] == 'receptionist':
         app.log.info('Registering a receptionist')
@@ -84,4 +88,4 @@ def register_user():
     else:
         app.log.error('[x] BUSINESS ROLE NOT FOUND')
         raise ValueError('business_role')
-    return json.dumps(result, cls=recursive_alchemy_encoder(), check_circular=False)
+    return {"result": "true"}
