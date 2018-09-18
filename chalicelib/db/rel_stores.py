@@ -35,17 +35,19 @@ class DoctorStore(MySqlStore):
     def get_doctor(self, doctor_id):
         print(doctor_id)
         with DatabaseSession() as session:
-            doctor = session.query(Doctor).\
+            doctor = session.query(Doctor). \
                 filter(Doctor.Doctor_Id == doctor_id)
             data = doctor.all()
             return data
-
 
     def get_all_doctors(self):
         with DatabaseSession() as session:
             query = session.query(Doctor)
             data = query.all()
             return data
+
+    def update_doctor(self, doctor_id, params):
+        self.update_object(entity=Doctor, _id=doctor_id, params=params)
 
 
 class ReceptionistStore(MySqlStore):
@@ -79,7 +81,7 @@ class ReceptionistStore(MySqlStore):
     def get_receptionist(self, receptionist_id):
         print(receptionist_id)
         with DatabaseSession() as session:
-            receptionist = session.query(Receptionist).\
+            receptionist = session.query(Receptionist). \
                 filter(Receptionist.Receptionist_Id == receptionist_id)
             data = receptionist.all()
             return data
@@ -89,3 +91,6 @@ class ReceptionistStore(MySqlStore):
             query = session.query(Receptionist)
             data = query.all()
             return data
+
+    def update_receptionist(self, receptionist_id, params):
+        self.update_object(entity=Receptionist, _id=receptionist_id, params=params)
