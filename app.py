@@ -62,7 +62,7 @@ def register_user():
     if user_metadata['business_role'] == 'doctor':
         app.log.info('Registering a doctor...')
         doctor_store = DoctorStore()
-        result = doctor_store.create_doctor(
+        doctor_store.create_doctor(
             first_name=user_metadata['first_name'],
             last_name=user_metadata['last_name'],
             gender="M",
@@ -74,7 +74,7 @@ def register_user():
     elif user_metadata['business_role'] == 'receptionist':
         app.log.info('Registering a receptionist')
         receptionist_store = ReceptionistStore()
-        result = receptionist_store.create_receptionist(
+        receptionist_store.create_receptionist(
             first_name=user_metadata['first_name'],
             last_name=user_metadata['last_name'],
             gender="M",
