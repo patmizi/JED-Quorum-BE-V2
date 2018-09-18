@@ -5,7 +5,7 @@ from datetime import date
 
 from chalicelib.lib.helpers import serialize_date
 
-def new_alchemy_encoder():
+def recursive_alchemy_encoder():
     _visited_objs = []
 
     class AlchemyEncoder(json.JSONEncoder):

@@ -1,10 +1,4 @@
-import json
-import datetime
-
-from sqlalchemy.orm import joinedload
-
 from chalicelib.lib import helpers
-from chalicelib.lib.encoders import new_alchemy_encoder
 
 from . import DatabaseSession
 from .store import MySqlStore
@@ -63,4 +57,18 @@ class ReceptionistStore(MySqlStore):
             session.flush()
             session.commit()
 
-            return "DONE"
+            return self.get_receptionist(entity.Receptionist_Id)
+
+    def get_receptionist(self, receptionist_id):
+        print(receptionist_id)
+        with DatabaseSession() as session:
+            receptionist = session.query(Receptionist).\
+                filter(Receptionist.Receptionist_Id == receptionist_id)
+            data = receptionist.all()
+            return data
+
+    def get_all_receptionists(self):
+        with DatabaseSession() as session:
+            query = session.query(Receptionist)
+            data = query.all()
+            return data

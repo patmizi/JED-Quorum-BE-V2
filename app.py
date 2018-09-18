@@ -2,7 +2,7 @@ import json
 
 from chalice import Chalice
 from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore
-from chalicelib.lib.encoders import new_alchemy_encoder
+from chalicelib.lib.encoders import recursive_alchemy_encoder
 
 app = Chalice(app_name='quorum')
 app.debug = True
@@ -10,28 +10,44 @@ app.debug = True
 
 @app.route('/')
 def index():
-    return { "Hello": "World" }
+    return {"Hello": "World"}
 
 
 @app.route('/doctors/{id}', methods=['GET'], cors=True)
 def get_doctor(id):
-    print("GOT ID...")
-    print(id)
     doctor_store = DoctorStore()
-
-    print("[*] Getting doctor by id...")
     doctor = doctor_store.get_doctor(id)
-    print(">> GOT DOCTOR <<")
     print(doctor)
-    return json.dumps(doctor, cls=new_alchemy_encoder(), check_circular=False)
+    return json.dumps(doctor, cls=recursive_alchemy_encoder(), check_circular=False)
+
 
 @app.route('/doctors', methods=['GET'], cors=True)
 def get_doctors():
     print("[*] Get all doctors...")
     doctor_store = DoctorStore()
     doctors = doctor_store.get_all_doctors()
-    return json.dumps(doctors, cls=new_alchemy_encoder(), check_circular=False)
+    return json.dumps(doctors, cls=recursive_alchemy_encoder(), check_circular=False)
 
+
+@app.route('/receptionists/{id}')
+def get_receptionist(id):
+    receptionist_store = ReceptionistStore()
+    receptionist = receptionist_store.get_receptionist(id)
+    print(receptionist)
+    return json.dumps(receptionist, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+@app.route('/receptionists', methods=['GET'], cors=True)
+def get_receptionists():
+    print("[*] Get all receptionists...")
+    receptionist_store = ReceptionistStore()
+    receptionists = receptionist_store.get_all_receptionists()
+    return json.dumps(receptionists, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+#
+# Registration hook
+#
 @app.route('/register', methods=['POST'], cors=True)
 def register_user():
     print("[*] Registering new user...")
@@ -68,24 +84,4 @@ def register_user():
     else:
         app.log.error('[x] BUSINESS ROLE NOT FOUND')
         raise ValueError('business_role')
-    return json.dumps(result, cls=new_alchemy_encoder(), check_circular=False)
-
-# The view function above will return {"hello": "world"}
-# whenever you make an HTTP GET request to '/'.
-#
-# Here are a few more examples:
-#
-# @con.route('/hello/{name}')
-# def hello_name(name):
-#    # '/hello/james' -> {"hello": "james"}
-#    return {'hello': name}
-#
-# @con.route('/users', methods=['POST'])
-# def create_user():
-#     # This is the JSON body the user sent in their POST request.
-#     user_as_json = con.current_request.json_body
-#     # We'll echo the json body back to the user in a 'user' key.
-#     return {'user': user_as_json}
-#
-# See the README documentation for more examples.
-#
+    return json.dumps(result, cls=recursive_alchemy_encoder(), check_circular=False)
