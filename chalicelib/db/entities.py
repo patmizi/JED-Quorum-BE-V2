@@ -1,16 +1,9 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, SmallInteger, String, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-import enum
 
 Base = declarative_base()
 metadata = Base.metadata
-
-class GenderEnum(enum.Enum):
-    M = "M"
-    m = "M"
-    F = "F"
-    f = "F"
 
 class Address(Base):
     __tablename__ = "Address"
@@ -34,7 +27,7 @@ class Doctor(Base):
     Doctor_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    # Gender = Column(Enum(GenderEnum), nullable=False)
+    Gender = Column(String(2), nullable=False)
     Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
@@ -58,7 +51,7 @@ class Patient(Base):
     Doctor_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    Gender = Column(Enum(GenderEnum), nullable=False)
+    Gender = Column(String(2), nullable=False)
     Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
@@ -74,7 +67,7 @@ class Receptionist(Base):
     Receptionist_Id = Column(Integer, primary_key=True)
     First_Name = Column(String(30), nullable=False)
     Last_Name = Column(String(30), nullable=False)
-    # Gender = Column(Enum(GenderEnum), nullable=False)
+    Gender = Column(String(2), nullable=False)
     Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)

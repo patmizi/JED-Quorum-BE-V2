@@ -8,7 +8,7 @@ from chalicelib.lib.encoders import new_alchemy_encoder
 
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor, Receptionist
+from .entities import Doctor, Receptionist, Address
 
 
 class DoctorStore(MySqlStore):
@@ -17,12 +17,20 @@ class DoctorStore(MySqlStore):
         entity = Doctor(
             First_Name=first_name,
             Last_Name=last_name,
-            # Gender=gender,
             Date_Of_Birth=date_of_birth,
             Contact_Number=contact_number,
             Email=email,
             **data)
-
+        if 'address' in data:
+            address_entity = Address(
+                Suburb=data['address'].get('Suburb', ""),
+                Country=data['address'].get('Country', ""),
+                State=data['address'].get('State', ""),
+                Postcode=data['address'].get('Postcode', ""),
+                Street=data['address'].get('Street', ""),
+                Unit=data['address'].get('Unit', "")
+            )
+            entity.address = address_entity
         with DatabaseSession() as session:
             session.add(entity)
             session.flush()
@@ -57,7 +65,16 @@ class ReceptionistStore(MySqlStore):
             Contact_Number=contact_number,
             Email=email,
             **data)
-
+        if 'address' in data:
+            address_entity = Address(
+                Suburb=data['address'].get('Suburb', ""),
+                Country=data['address'].get('Country', ""),
+                State=data['address'].get('State', ""),
+                Postcode=data['address'].get('Postcode', ""),
+                Street=data['address'].get('Street', ""),
+                Unit=data['address'].get('Unit', "")
+            )
+            entity.address = address_entity
         with DatabaseSession() as session:
             session.add(entity)
             session.flush()
