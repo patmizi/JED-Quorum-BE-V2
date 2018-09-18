@@ -21,6 +21,13 @@ def get_doctor(id):
     return json.dumps(doctor, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
+@app.route('/doctors/{id}', methods=['PATCH'], cors=True)
+def update_doctor(id):
+    doctor_store = DoctorStore()
+    updated_doctor = doctor_store.update_doctor(id)
+    print(updated_doctor)
+    return json.dumps(updated_doctor, cls=recursive_alchemy_encoder(), check_circular=False)
+
 
 @app.route('/doctors', methods=['GET'], cors=True)
 def get_doctors():
@@ -30,13 +37,20 @@ def get_doctors():
     return json.dumps(doctors, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
-
-@app.route('/receptionists/{id}')
+@app.route('/receptionists/{id}', methods=['GET'], cors=True)
 def get_receptionist(id):
     receptionist_store = ReceptionistStore()
     receptionist = receptionist_store.get_receptionist(id)
     print(receptionist)
     return json.dumps(receptionist, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+@app.route('/receptionists/{id}', methods=['PATCH'], cors=True)
+def update_receptionist(id):
+    receptionist_store = ReceptionistStore()
+    updated_receptionist = receptionist_store.update_receptionist(id)
+    print(update_receptionist)
+    return json.dumps(updated_receptionist, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
 @app.route('/receptionists', methods=['GET'], cors=True)
