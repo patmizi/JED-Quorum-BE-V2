@@ -13,6 +13,9 @@ def index():
     return {"Hello": "World"}
 
 
+##
+## /doctors
+##
 @app.route('/doctors/{id}', methods=['GET'], cors=True)
 def get_doctor(id):
     doctor_store = DoctorStore()
@@ -37,6 +40,9 @@ def get_doctors():
     return json.dumps(doctors, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
+##
+## /receptionists
+##
 @app.route('/receptionists/{id}', methods=['GET'], cors=True)
 def get_receptionist(id):
     receptionist_store = ReceptionistStore()
