@@ -20,8 +20,8 @@ source ./environment/test_setup.sh
 source ./environment/prod_setup.sh
   
 # run local api (need connection/config.py for db connection)
-chalice local
-
+./run_local_api.sh
+  
 # run unit tests
 ./test.sh # Make sure you have config.py in chalicelib/connection
   
