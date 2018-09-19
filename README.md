@@ -19,6 +19,9 @@ source ./environment/prod_setup.sh
   
 # run local api (need connection/config.py for db connection)
 chalice local
+
+# run unit tests
+./test.sh # Make sure you have config.py in chalicelib/connection
   
 # deploy to aws environment (need aws credentials set up)
 chalice deploy
