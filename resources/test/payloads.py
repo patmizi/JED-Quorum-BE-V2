@@ -65,3 +65,19 @@ register_receptionist_payload = {
         "updated_at": "2018-09-05T07:19:47Z"
     }
 }
+
+add_patient_payload = {
+    "contact_number": "0400000000",
+    "date_of_birth": "12/01/1993",
+    "email": "kullen.hatim.patient@lcelandic.com",
+    "first_name": "Test",
+    "gender": "M",
+    "full_name": "Test Test",
+    "last_name": "Test",
+    "address": {
+        "Country": "United States",
+        "Postcode": "10013",
+        "State": "NY",
+        "Street": "17 Greenwich St"
+    }
+}

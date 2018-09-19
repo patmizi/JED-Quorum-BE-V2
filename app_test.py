@@ -2,7 +2,7 @@ import json
 import os
 import pytest
 from app import app
-from resources.test.payloads import register_doctor_payload, register_receptionist_payload
+from resources.test.payloads import register_doctor_payload, register_receptionist_payload, add_patient_payload
 from resources.test.headers import common_post_header
 from resources.test.expected import expected_response
 
@@ -92,3 +92,14 @@ class TestChalice(object):
                                           )
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_get_receptionist')
+
+    def test_add_patient(self, gateway_factory):
+        gateway = gateway_factory()
+        payload = json.dumps(add_patient_payload)
+        response = gateway.handle_request(method='POST',
+                                          path='/patients',
+                                          header=common_post_header,
+                                          body=payload
+                                          )
+        assert response['statusCode'] == 200
+        # TODO: assert response to correct value
