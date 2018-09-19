@@ -61,12 +61,12 @@ def get_doctor(id):
     return json.dumps(doctor, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
-@app.route('/doctors/{id}', methods=['PATCH'], cors=True)
-def update_doctor(id):
-    doctor_store = DoctorStore()
-    updated_doctor = doctor_store.update_doctor(id)
-    print(updated_doctor)
-    return json.dumps(updated_doctor, cls=recursive_alchemy_encoder(), check_circular=False)
+# @app.route('/doctors/{id}', methods=['PATCH'], cors=True)
+# def update_doctor(id):
+#     doctor_store = DoctorStore()
+#     updated_doctor = doctor_store.update_doctor(id)
+#     print(updated_doctor)
+#     return json.dumps(updated_doctor, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
 @app.route('/doctors', methods=['GET'], cors=True)

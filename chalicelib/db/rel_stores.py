@@ -13,6 +13,7 @@ class DoctorStore(MySqlStore):
             Last_Name=last_name,
             Date_Of_Birth=date_of_birth,
             Contact_Number=contact_number,
+            Gender=gender,
             Email=email,
             **data)
         if 'address' in data:
@@ -57,7 +58,7 @@ class ReceptionistStore(MySqlStore):
         entity = Receptionist(
             First_Name=first_name,
             Last_Name=last_name,
-            # Gender=gender,
+            Gender=gender,
             Date_Of_Birth=date_of_birth,
             Contact_Number=contact_number,
             Email=email,
