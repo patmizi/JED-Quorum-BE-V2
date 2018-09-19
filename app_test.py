@@ -2,7 +2,6 @@ import json
 import pytest
 from app import app
 
-
 @pytest.fixture
 def gateway_factory():
     from chalice.config import Config

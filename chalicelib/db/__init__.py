@@ -1,10 +1,13 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from chalicelib.connection.config import connection_strings  # Not committed to VCS
 
 __all__ = ["DatabaseConnection", "DatabaseSession"]
 
-connection_string = connection_strings.get("prod")
+# Picks a database type. Either sqlite for test or mysql for prod
+connection_string = connection_strings.get(os.getenv('DATABASE_TYPE', 'prod'))
 engine = create_engine(connection_string)
 
 class DatabaseConnection:

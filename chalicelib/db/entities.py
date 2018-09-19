@@ -6,7 +6,7 @@ Base = declarative_base()
 metadata = Base.metadata
 
 MedicalCaseDoctors = Table(
-    'association',
+    'MedicalCaseDoctors',
     Base.metadata,
     Column('Medical_Case_Id', Integer, ForeignKey('MedicalCase.Medical_Case_Id')),
     Column('Doctor_Id', Integer, ForeignKey('Doctor.Doctor_Id'))
@@ -42,7 +42,7 @@ class Doctor(Base):
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
 
-    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, backref="doctors")
+    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, back_populates="doctors", lazy="joined")
     address = relationship('Address', lazy="joined")
 
 
@@ -52,9 +52,10 @@ class MedicalCase(Base):
     Medical_Case_Id = Column(Integer, primary_key=True)
     Medical_Case_Name = Column(String(30), nullable=False)
     Medical_Case_Description = Column(Text, nullable=False)
+    Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
 
     patient = relationship("Patient", lazy="joined")
-    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, backref="medical_cases")
+    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, back_populates="medical_cases", lazy="joined")
 
 
 class Patient(Base):
@@ -67,7 +68,7 @@ class Patient(Base):
     Date_Of_Birth = Column(Date, nullable=False)
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
-    Address_Id = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
 
     address = relationship('Address', lazy="joined")
 

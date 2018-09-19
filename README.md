@@ -1,17 +1,25 @@
 # JED-Quorum-BE-V2
 Python backend for the quorum application
 
-Uses the chalice framework with sql-alchemy for ORM interface to MySQL database
+Uses the chalice framework with sql-alchemy for ORM interface to the database
+
+Test database uses sqlite. Prod db uses MySQL
 
 ## Build Setup
 
 ```
 # install dependencies
 pip install -r requirements.txt
-
-# run local api (need con.config for db connection)
+  
+## Choose database type (Linux)
+# Test
+source ./environment/test_setup.sh
+# Prod
+source ./environment/prod_setup.sh
+  
+# run local api (need connection/config.py for db connection)
 chalice local
-
+  
 # deploy to aws environment (need aws credentials set up)
 chalice deploy
 ```

@@ -1,4 +1,10 @@
-# config.py structure. Its just a dict.
-#connection_strings = {
-#    "prod": "mysql+pymysql://{USR}:{PSWD}@{HOST}:{PORT}/quorumdb"
-#}
+# config.py structure
+import os
+
+PROJECT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+TEST_DB = "test.db"
+
+connection_strings = {
+    "prod": "mysql+pymysql://{USR}:{PSWD}@{HOST}:{PORT}/quorumdb",
+    "test": 'sqlite:///' + os.path.join(PROJECT_DIRECTORY, 'database', TEST_DB)
+}
