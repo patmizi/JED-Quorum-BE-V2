@@ -1,6 +1,13 @@
 import json
+import os
 import pytest
 from app import app
+
+@pytest.yield_fixture(autouse=True)
+def set_environment():
+    os.environ["DATABASE_TYPE"] = "test"
+    yield
+    del os.environ["DATABASE_TYPE"]
 
 @pytest.fixture
 def gateway_factory():
@@ -16,6 +23,7 @@ def gateway_factory():
 
 class TestChalice(object):
     def test_hello_world(self, gateway_factory):
+        print(os.environ.get('DATABASE_TYPE'))
         gateway = gateway_factory()
         response = gateway.handle_request(method='GET',
                                           path='/',

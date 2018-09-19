@@ -98,6 +98,7 @@ class ReceptionistStore(MySqlStore):
         self.update_object(entity=Receptionist, _id=receptionist_id, params=params)
         return self.get_receptionist(receptionist_id)
 
+
 class PatientStore(MySqlStore):
     def get_all_patients(self):
         with DatabaseSession() as session:
@@ -107,10 +108,11 @@ class PatientStore(MySqlStore):
 
     def get_patient(self, patient_id):
         with DatabaseSession() as session:
-            query = session.query(Patient).\
+            query = session.query(Patient). \
                 filter(Patient.Patient_Id == patient_id)
             data = query.all()
             return data
+
 
 class MedicalCaseStore(MySqlStore):
     def get_medical_case(self, medical_case_id):
