@@ -50,6 +50,27 @@ def get_patient(id):
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
+@app.route('/patients', methods=['POST'], cors=True)
+def add_patient():
+    post_body = app.current_request.json_body
+    patient_store = PatientStore()
+    data = {}
+    if 'address' in post_body:
+        data['address'] = post_body['address']
+
+    patient = patient_store.add_patient(
+        first_name=post_body.get(''),
+        last_name=post_body.get(''),
+        gender=post_body.get(''),
+        date_of_birth=post_body.get(''),
+        contact_number=post_body.get(''),
+        email=post_body.get(''),
+        data=data
+    )
+
+    print(patient)
+    return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
+
 ##
 ## /doctors
 ##

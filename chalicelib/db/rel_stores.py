@@ -64,7 +64,7 @@ class ReceptionistStore(MySqlStore):
             Email=email,
             **data)
         if 'address' in data:
-            address_entity = Address(
+            entity.address = Address(
                 Suburb=data['address'].get('Suburb', ""),
                 Country=data['address'].get('Country', ""),
                 State=data['address'].get('State', ""),
@@ -72,7 +72,7 @@ class ReceptionistStore(MySqlStore):
                 Street=data['address'].get('Street', ""),
                 Unit=data['address'].get('Unit', "")
             )
-            entity.address = address_entity
+
         with DatabaseSession() as session:
             session.add(entity)
             session.flush()
@@ -113,6 +113,31 @@ class PatientStore(MySqlStore):
             data = query.all()
             return data
 
+    def add_patient(self, first_name, last_name, gender, date_of_birth, contact_number, email, data):
+        entity = Patient(
+            First_Name=first_name,
+            Last_Name=last_name,
+            Gender=gender,
+            Date_Of_Birth=date_of_birth,
+            Contact_Number=contact_number,
+            Email=email,
+            **data)
+        if 'address' in data:
+            entity.address = Address(
+                Suburb=data['address'].get('Suburb', ""),
+                Country=data['address'].get('Country', ""),
+                State=data['address'].get('State', ""),
+                Postcode=data['address'].get('Postcode', ""),
+                Street=data['address'].get('Street', ""),
+                Unit=data['address'].get('Unit', "")
+            )
+
+        with DatabaseSession() as session:
+            session.add(entity)
+            session.flush()
+            session.commit()
+
+            return self.get_patient(entity.Patient_Id)
 
 class MedicalCaseStore(MySqlStore):
     def get_medical_case(self, medical_case_id):
