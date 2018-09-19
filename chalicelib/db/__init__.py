@@ -20,6 +20,7 @@ class DatabaseConnection:
 
 class DatabaseSession:
     def __enter__(self):
+        print(connection_string)
         self.session = Session(engine)
         self.session.expire_on_commit = False
         return self.session
