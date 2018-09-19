@@ -1,1 +1,1 @@
-export DATABASE_TYPE = "test"
+export DATABASE_TYPE=test
