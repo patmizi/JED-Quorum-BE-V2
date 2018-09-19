@@ -23,6 +23,26 @@ responses = {
           "Unit": ""
         },
         "medical_cases": []
+    }],
+    "expected_get_receptionist": [{
+        "AddressId": 2,
+        "Contact_Number": "0987654321234567",
+        "Date_Of_Birth": "12/01/1993",
+        "Email": "kullen.hatim.receptionist@lcelandic.com",
+        "First_Name": "Test",
+        "Gender": "M",
+        "Last_Name": "Test",
+        "Receptionist_Id": 1,
+        "User_Id": "17d5b44c-1472-4445-a9d0-d63dabbe3690",
+        "address": {
+            "AddressId": 2,
+            "Country": "United States",
+            "Postcode": 10013,
+            "State": "NY",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": ""
+        }
     }]
 }
 

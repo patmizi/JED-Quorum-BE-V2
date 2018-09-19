@@ -2,7 +2,7 @@ import json
 import os
 import pytest
 from app import app
-from resources.test.payloads import register_doctor_payload
+from resources.test.payloads import register_doctor_payload, register_receptionist_payload
 from resources.test.headers import common_post_header
 from resources.test.expected import expected_response
 
@@ -38,7 +38,7 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert json.loads(response['body']) == dict([('Hello', 'World')])
 
-    def test_registration_hook(self, gateway_factory):
+    def test_register_doctor(self, gateway_factory):
         print(os.environ.get('DATABASE_TYPE'))
         gateway = gateway_factory()
         payload = json.dumps(register_doctor_payload)
@@ -71,3 +71,24 @@ class TestChalice(object):
                                           )
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_get_doctor')
+
+    def test_register_receptionist(self, gateway_factory):
+        gateway = gateway_factory()
+        payload = json.dumps(register_receptionist_payload)
+        response = gateway.handle_request(method='POST',
+                                          path='/register',
+                                          headers=common_post_header,
+                                          body=payload
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_register_receptionist')
+
+    def test_get_receptionist(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/receptionists/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_receptionist')

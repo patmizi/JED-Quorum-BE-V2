@@ -1,4 +1,6 @@
 # JED-Quorum-BE-V2
+*"No regression. Only progression - Some Guy"*
+  
 Python backend for the quorum application
 
 Uses the chalice framework with sql-alchemy for ORM interface to the database
