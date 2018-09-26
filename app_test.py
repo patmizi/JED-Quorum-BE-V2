@@ -98,7 +98,7 @@ class TestChalice(object):
         payload = json.dumps(add_patient_payload)
         response = gateway.handle_request(method='POST',
                                           path='/patients',
-                                          header=common_post_header,
+                                          headers=common_post_header,
                                           body=payload
                                           )
         assert response['statusCode'] == 200

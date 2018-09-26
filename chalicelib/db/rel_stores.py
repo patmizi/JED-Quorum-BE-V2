@@ -114,6 +114,7 @@ class PatientStore(MySqlStore):
             return data
 
     def add_patient(self, first_name, last_name, gender, date_of_birth, contact_number, email, data):
+        date_of_birth = helpers.get_date_from_string(date_of_birth)
         entity = Patient(
             First_Name=first_name,
             Last_Name=last_name,

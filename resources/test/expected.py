@@ -45,7 +45,23 @@ responses = {
         }
     }],
     "expected_add_patient": [{
-
+        "AddressId": 3,
+        "Contact_Number": "0400000000",
+        "Date_Of_Birth": "12/01/1993",
+        "Email": "kullen.hatim.patient@lcelandic.com",
+        "First_Name": "Test",
+        "Gender": "M",
+        "Last_Name": "Test",
+        "Patient_Id": 1,
+        "address": {
+            "AddressId": 3,
+            "Country": "United States",
+            "Postcode": 10013,
+            "State": "NY",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": ""
+        }
     }]
 }
 
