@@ -102,4 +102,4 @@ class TestChalice(object):
                                           body=payload
                                           )
         assert response['statusCode'] == 200
-        # TODO: assert response to correct value
+        assert response['body'] == expected_response('expected_add_patient')
