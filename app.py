@@ -23,6 +23,24 @@ def get_medical_case(id):
     print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
+@app.route('/cases', methods=['POST'], cors=True)
+def case_patient():
+    post_body = app.current_request.json_body
+    medical_case_store = MedicalCaseStore()
+    data = {}
+    case = medical_case_store.MedicalCaseStore(
+        first_name=post_body.get('First_Name'),
+        last_name=post_body.get('Last_Name'),
+        gender=post_body.get('Gender'),
+        date_of_birth=post_body.get('Date_Of_Birth'),
+        contact_number=post_body.get('Contact_Number'),
+        email=post_body.get('Email'),
+        data=data
+    )
+
+    print(patient)
+    return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
+
 
 # @app.route('/cases', methods=['POST'], cors=True)
 # def create_medical_case():
