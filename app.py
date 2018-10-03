@@ -29,16 +29,14 @@ def case_patient():
     medical_case_store = MedicalCaseStore()
     data = {}
     case = medical_case_store.MedicalCaseStore(
-        first_name=post_body.get('First_Name'),
-        last_name=post_body.get('Last_Name'),
-        gender=post_body.get('Gender'),
-        date_of_birth=post_body.get('Date_Of_Birth'),
-        contact_number=post_body.get('Contact_Number'),
-        email=post_body.get('Email'),
+        medical_case_name=post_body.get('Medical_Case_Name'),
+        medical_case_description=post_body.get('Medical_Case_Description'),
+        patient_data=post_body.get('Patient_Data'),
         data=data
     )
 
-    print(patient)
+
+    print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
