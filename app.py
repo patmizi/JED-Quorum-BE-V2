@@ -59,12 +59,12 @@ def add_patient():
         data['address'] = post_body['address']
 
     patient = patient_store.add_patient(
-        first_name=post_body.get('first_name'),
-        last_name=post_body.get('last_name'),
-        gender=post_body.get('gender'),
-        date_of_birth=post_body.get('date_of_birth'),
-        contact_number=post_body.get('contact_number'),
-        email=post_body.get('email'),
+        first_name=post_body.get('First_Name'),
+        last_name=post_body.get('Last_Name'),
+        gender=post_body.get('Gender'),
+        date_of_birth=post_body.get('Date_Of_Birth'),
+        contact_number=post_body.get('Contact_Number'),
+        email=post_body.get('Email'),
         data=data
     )
 
