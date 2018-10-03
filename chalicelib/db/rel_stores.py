@@ -140,6 +140,13 @@ class PatientStore(MySqlStore):
 
             return self.get_patient(entity.Patient_Id)
 
+    def delete_patient(self, patient_id):
+        with DatabaseSession() as session:
+            session.query(Patient).filter(Patient.Patient_Id == patient_id).delete()
+            session.flush()
+            session.commit()
+
+
 class MedicalCaseStore(MySqlStore):
     def get_medical_case(self, medical_case_id):
         with DatabaseSession() as session:
