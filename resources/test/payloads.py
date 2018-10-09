@@ -13,14 +13,14 @@ register_doctor_payload = {
             "provider": "email"
         },
         "user_metadata": {
-            "business_role": "doctor",
-            "contact_number": "0987654321234567",
-            "date_of_birth": "12/01/1993",
-            "email": "kullen.hatim@lcelandic.com",
-            "gender": "F",
-            "first_name": "Test",
-            "full_name": "Test Test",
-            "last_name": "Test",
+            "Business_Role": "doctor",
+            "Contact_Number": "0987654321234567",
+            "Date_Of_Birth": "12/01/1993",
+            "Email": "kullen.hatim@lcelandic.com",
+            "Gender": "F",
+            "First_Name": "Test",
+            "Full_Name": "Test Test",
+            "Last_Name": "Test",
             "address": {
                 "Country": "United States",
                 "Postcode": "10013",
@@ -46,14 +46,14 @@ register_receptionist_payload = {
             "provider": "email"
         },
         "user_metadata": {
-            "business_role": "receptionist",
-            "contact_number": "0987654321234567",
-            "date_of_birth": "12/01/1993",
-            "email": "kullen.hatim.receptionist@lcelandic.com",
-            "first_name": "Test",
-            "gender": "M",
-            "full_name": "Test Test",
-            "last_name": "Test",
+            "Business_Role": "receptionist",
+            "Contact_Number": "0987654321234567",
+            "Date_Of_Birth": "12/01/1993",
+            "Email": "kullen.hatim.receptionist@lcelandic.com",
+            "First_Name": "Test",
+            "Gender": "M",
+            "Full_Name": "Test Test",
+            "Last_Name": "Test",
             "address": {
                 "Country": "United States",
                 "Postcode": "10013",
@@ -67,13 +67,13 @@ register_receptionist_payload = {
 }
 
 add_patient_payload = {
-    "contact_number": "0400000000",
-    "date_of_birth": "12/01/1993",
-    "email": "kullen.hatim.patient@lcelandic.com",
-    "first_name": "Test",
-    "gender": "M",
-    "full_name": "Test Test",
-    "last_name": "Test",
+    "Contact_Number": "0400000000",
+    "Date_Of_Birth": "12/01/1993",
+    "Email": "kullen.hatim.patient@lcelandic.com",
+    "First_Name": "Test",
+    "Gender": "M",
+    "Full_Name": "Test Test",
+    "Last_Name": "Test",
     "address": {
         "Country": "United States",
         "Postcode": "10013",
