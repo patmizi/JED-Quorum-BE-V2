@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, String, Table, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, synonym
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -69,6 +69,7 @@ class Patient(Base):
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
+    id = synonym("Patient_Id")
 
     address = relationship('Address', lazy="joined")
 

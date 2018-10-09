@@ -72,6 +72,14 @@ def add_patient():
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
+@app.route('/patients/{id}', methods=['PUT'], cors=True)
+def update_patient(id):
+    post_body = app.current_request.json_body
+    patient_store = PatientStore()
+    patient = patient_store.update_patient(patient_id=id, params=post_body)
+    return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
 @app.route('/patients/{id}', methods=['DELETE'], cors=True)
 def delete_patient(id):
     patient_store = PatientStore()
