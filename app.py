@@ -24,12 +24,12 @@ def get_medical_case(id):
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
-# @app.route('/cases', methods=['POST'], cors=True)
-# def create_medical_case():
-#     medical_case_store = MedicalCaseStore()
-#     body_json = app.current_request.json_body
-#     print(body_json)
-#     return { "Value": True }
+@app.route('/cases', methods=['POST'], cors=True)
+def create_medical_case():
+    medical_case_store = MedicalCaseStore()
+    body_json = app.current_request.json_body
+    print(body_json)
+    return { "Value": True }
 
 ##
 ## /patients

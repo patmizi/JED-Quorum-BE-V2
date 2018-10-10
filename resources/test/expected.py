@@ -82,6 +82,13 @@ responses = {
             "Unit": ""
         }
     }],
+    "expected_create_medical_case": [{
+        "medical_Case_id": 1,
+        "Patient_Id": 1,
+        "Medical_case_name": "test",
+        "Medical_case_description": "test"
+     }],
+
 }
 
 
