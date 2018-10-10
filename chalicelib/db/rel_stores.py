@@ -165,11 +165,6 @@ class MedicalCaseStore(MySqlStore):
             Patient_Id=patient_id
         )
 
-
-
-        # case.patient = PatientStore(
-        #     Patient_Id=PatientStore.get_patient(patient_id),
-        #  )
         # if data.get('doctors') is not None:
         #     case.doctors = []
         #     for d in data.get('doctors'):
