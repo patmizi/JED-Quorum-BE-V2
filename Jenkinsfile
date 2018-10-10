@@ -1,6 +1,9 @@
 pipeline {
     agent{
-        docker { image 'python:3.6.6' }
+        docker {
+            image 'python:3.6.6',
+            args '-u root:sudo'
+        }
     }
     environment {
         CONNECTION_CONFIG     = credentials('jed-be-connection-config')
