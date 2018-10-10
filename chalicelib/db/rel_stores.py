@@ -180,3 +180,9 @@ class MedicalCaseStore(MySqlStore):
             session.commit()
 
             return self.get_medical_case(case.Medical_Case_Id)
+
+
+    def update_medical_case(self, medical_case_id, params):
+        self.update_object(entity=MedicalCase, medical_case_id=patient_id, params=params)
+        return self.get_medical_case(medical_case_id)
+
