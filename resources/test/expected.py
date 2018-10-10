@@ -106,6 +106,12 @@ responses = {
             "Unit": ""}
             }
      }],
+    "expected_update_medical_case": [{
+        "Medical_Case_Id": 1,
+        "Patient_Id": 1,
+        "Medical_Case_Name": "updated",
+        "Medical_Case_Description": "updated"
+    }]
 
 }
 

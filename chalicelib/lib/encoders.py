@@ -20,6 +20,8 @@ def recursive_alchemy_encoder():
                 # an SQLAlchemy class
                 fields = {}
                 for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+                    if field == 'id':  # id should not be returned because it is a synonym
+                        continue
                     if isinstance(obj.__getattribute__(field), date):
                         fields[field] = serialize_date(obj.__getattribute__(field))
                     else:
