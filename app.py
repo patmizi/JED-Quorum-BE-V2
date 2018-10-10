@@ -31,7 +31,9 @@ def case_patient():
     case = medical_case_store.MedicalCaseStore(
         medical_case_name=post_body.get('Medical_Case_Name'),
         medical_case_description=post_body.get('Medical_Case_Description'),
+        patient_id=post_body.get('Patient_Id'),
         patient_data=post_body.get('Patient_Data'),
+        doctor_id=post_body.get('Doctor_Id'),
         data=data
     )
 
