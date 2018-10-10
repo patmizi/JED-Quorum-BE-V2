@@ -19,9 +19,8 @@ pipeline {
         stage('Set Up Credentials') {
             steps {
                 withCredentials([file(credentialsId:'jed-be-connection-config', variable: 'CONNECTION_STRING')]) {
-
+                    sh 'echo $CONNECTION_STRING >> ./chalicelib/connection/config.py'
                 }
-                sh 'echo $CONNECTION_STRING >> ./chalicelib/connection/config.py'
                 sh 'aws configure set aws_access_key_id ${AWS_ACCESS_KEY}'
                 sh 'aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}'
                 sh 'aws configure set region ap-southeast-2'
