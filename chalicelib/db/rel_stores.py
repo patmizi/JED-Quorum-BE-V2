@@ -158,22 +158,26 @@ class MedicalCaseStore(MySqlStore):
             data = query.all()
             return data
 
-    def add_medical_case(self, medical_case_name, medical_case_description, patient_data, patient_id, doctor_id, data):
+    def add_medical_case(self, medical_case_name, medical_case_description, patient_id, data):
         case = MedicalCase(
             Medical_Case_Name=medical_case_name,
-            Medical_Case_Description=medical_case_description
+            Medical_Case_Description=medical_case_description,
+            Patient_Id=patient_id
         )
-        case.patient = Patient(
-            patient_id=patient_data.get('Patient_Id'),
-        )
-        if data.get('doctors') is not None:
-            case.doctors = []
-            for d in data.get('doctors'):
-                case.doctors.append(
-                    Doctor(
-                        doctor_id=d.get('Doctor_Id')
-                    )
-                )
+
+
+
+        # case.patient = PatientStore(
+        #     Patient_Id=PatientStore.get_patient(patient_id),
+        #  )
+        # if data.get('doctors') is not None:
+        #     case.doctors = []
+        #     for d in data.get('doctors'):
+        #         case.doctors.append(
+        #             Doctor(
+        #                 doctor_id=d.get('Doctor_Id')
+        #             )
+        #         )
         with DatabaseSession() as session:
             session.add(case)
             session.flush()
