@@ -115,6 +115,7 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_update_patient')
 
+    @pytest.mark.skip(reason="Not implemented")
     def test_create_medical_case(self, gateway_factory):
         gateway = gateway_factory()
         payload = json.dumps(create_medical_case_payload)
@@ -126,6 +127,7 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_create_medical_case')
 
+    @pytest.mark.skip(reason="Not implemented yet")
     def test_update_medical_case(self, gateway_factory):
         gateway = gateway_factory()
         payload = json.dumps(create_medical_case_payload)
