@@ -48,7 +48,7 @@ class DoctorStore(MySqlStore):
             return data
 
     def update_doctor(self, doctor_id, params):
-        self.update_object(entity=Doctor, _id=doctor_id, primary_key='Doctor_Id', params=params)
+        self.update_object(entity=Doctor, _id=doctor_id, params=params)
         return self.get_doctor(doctor_id)
 
 
@@ -95,7 +95,7 @@ class ReceptionistStore(MySqlStore):
             return data
 
     def update_receptionist(self, receptionist_id, params):
-        self.update_object(entity=Receptionist, _id=receptionist_id, primary_key="Receptionist_Id", params=params)
+        self.update_object(entity=Receptionist, _id=receptionist_id, params=params)
         return self.get_receptionist(receptionist_id)
 
 
@@ -140,7 +140,7 @@ class PatientStore(MySqlStore):
             return self.get_patient(entity.Patient_Id)
 
     def update_patient(self, patient_id, params):
-        self.update_object(entity=Patient, _id=patient_id, primary_key='Patient_Id', params=params)
+        self.update_object(entity=Patient, _id=patient_id, params=params)
         return self.get_patient(patient_id)
 
     def delete_patient(self, patient_id):
