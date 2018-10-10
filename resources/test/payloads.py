@@ -103,7 +103,8 @@ update_patient_payload = {
 create_medical_case_payload = {
         "Patient_Id" : 1,
         "Medical_Case_Name": "test",
-        "Medical_Case_Description": "test"
+        "Medical_Case_Description": "test",
+        "doctors": "1"       
 }
 
 update_medical_case_payload = {

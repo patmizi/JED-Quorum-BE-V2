@@ -18,18 +18,26 @@ def index():
 ##
 @app.route('/cases/{id}', methods=['GET'], cors=True)
 def get_medical_case(id):
+    print("Case id = " + id)
     medical_case_store = MedicalCaseStore()
     case = medical_case_store.get_medical_case(id)
-    print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
-
 @app.route('/cases', methods=['POST'], cors=True)
-def create_medical_case():
+def case_patient():
+    post_body = app.current_request.json_body
     medical_case_store = MedicalCaseStore()
-    body_json = app.current_request.json_body
-    print(body_json)
-    return { "Value": True }
+    data = {}
+    case = medical_case_store.add_medical_case(
+        medical_case_name=post_body.get('Medical_Case_Name'),
+        medical_case_description=post_body.get('Medical_Case_Description'),
+        patient_id=post_body.get('Patient_Id'),
+        data=data
+    )
+
+
+    print(case)
+    return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
 @app.route('/cases/{id}', methods=['PUT'], cors=True)
 def update_medical_case(id):

@@ -54,8 +54,7 @@ class MedicalCase(Base):
     Medical_Case_Name = Column(String(30), nullable=False)
     Medical_Case_Description = Column(Text, nullable=False)
     Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
-    id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
-
+    #id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
     patient = relationship("Patient", lazy="joined")
     doctors = relationship('Doctor', secondary=MedicalCaseDoctors, back_populates="medical_cases", lazy="joined")
 
