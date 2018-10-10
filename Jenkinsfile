@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'pip install awscli --upgrade --user'
+                sh 'pip install awscli'
                 sh 'pip install -r requirements.txt'
             }
         }
