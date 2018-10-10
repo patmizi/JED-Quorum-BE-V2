@@ -103,6 +103,4 @@ venv.bak/
 .mypy_cache/
 
 .chalice/deployments/
-chalicelib/con/config.py
-chalicelib/connection/config.py
 database/test.db

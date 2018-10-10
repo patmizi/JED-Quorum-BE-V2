@@ -137,8 +137,11 @@ class PatientStore(MySqlStore):
             session.add(entity)
             session.flush()
             session.commit()
-
             return self.get_patient(entity.Patient_Id)
+
+    def update_patient(self, patient_id, params):
+        self.update_object(entity=Patient, _id=patient_id, params=params)
+        return self.get_patient(patient_id)
 
     def delete_patient(self, patient_id):
         with DatabaseSession() as session:

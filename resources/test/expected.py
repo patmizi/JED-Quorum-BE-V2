@@ -62,7 +62,33 @@ responses = {
             "Suburb": "",
             "Unit": ""
         }
-    }]
+    }],
+    "expected_update_patient": [{
+        "AddressId": 3,
+        "Contact_Number": "0400000000",
+        "Date_Of_Birth": "12/01/1993",
+        "Email": "kullen.hatim.patient@lcelandic.com",
+        "First_Name": "Updated",
+        "Gender": "M",
+        "Last_Name": "Test",
+        "Patient_Id": 1,
+        "address": {
+            "AddressId": 3,
+            "Country": "Australia",
+            "Postcode": 10013,
+            "State": "NSW",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": ""
+        }
+    }],
+    "expected_create_medical_case": [{
+        "medical_Case_id": 1,
+        "Patient_Id": 1,
+        "Medical_case_name": "test",
+        "Medical_case_description": "test"
+     }],
+
 }
 
 

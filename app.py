@@ -42,12 +42,12 @@ def case_patient():
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
-# @app.route('/cases', methods=['POST'], cors=True)
-# def create_medical_case():
-#     medical_case_store = MedicalCaseStore()
-#     body_json = app.current_request.json_body
-#     print(body_json)
-#     return { "Value": True }
+@app.route('/cases', methods=['POST'], cors=True)
+def create_medical_case():
+    medical_case_store = MedicalCaseStore()
+    body_json = app.current_request.json_body
+    print(body_json)
+    return { "Value": True }
 
 ##
 ## /patients
@@ -87,6 +87,14 @@ def add_patient():
     )
 
     print(patient)
+    return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+@app.route('/patients/{id}', methods=['PUT'], cors=True)
+def update_patient(id):
+    post_body = app.current_request.json_body
+    patient_store = PatientStore()
+    patient = patient_store.update_patient(patient_id=id, params=post_body)
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
@@ -163,28 +171,28 @@ def register_user():
     if 'address' in user_metadata:
         data['address'] = user_metadata.get('address')
 
-    if user_metadata['business_role'] == 'doctor':
+    if user_metadata['Business_Role'] == 'doctor':
         app.log.info('Registering a doctor...')
         doctor_store = DoctorStore()
         doctor_store.create_doctor(
-            first_name=user_metadata.get('first_name', 'User'),
-            last_name=user_metadata.get('last_name', ''),
-            gender=user_metadata.get('gender', 'M'),
-            date_of_birth=user_metadata.get('date_of_birth', ''),
-            contact_number=user_metadata.get('contact_number', ''),
-            email=user_metadata.get('email', ''),
+            first_name=user_metadata.get('First_Name', 'User'),
+            last_name=user_metadata.get('Last_Name', ''),
+            gender=user_metadata.get('Gender', 'M'),
+            date_of_birth=user_metadata.get('Date_Of_Birth', ''),
+            contact_number=user_metadata.get('Contact_Number', ''),
+            email=user_metadata.get('Email', ''),
             data=data
         )
-    elif user_metadata['business_role'] == 'receptionist':
+    elif user_metadata['Business_Role'] == 'receptionist':
         app.log.info('Registering a receptionist')
         receptionist_store = ReceptionistStore()
         receptionist_store.create_receptionist(
-            first_name=user_metadata.get('first_name', 'User'),
-            last_name=user_metadata.get('last_name', ''),
-            gender=user_metadata.get('gender', 'M'),
-            date_of_birth=user_metadata.get('date_of_birth', ''),
-            contact_number=user_metadata.get('contact_number', ''),
-            email=user_metadata.get('email', ''),
+            first_name=user_metadata.get('First_Name', 'User'),
+            last_name=user_metadata.get('Last_Name', ''),
+            gender=user_metadata.get('Gender', 'M'),
+            date_of_birth=user_metadata.get('Date_Of_Birth', ''),
+            contact_number=user_metadata.get('Contact_Number', ''),
+            email=user_metadata.get('Email', ''),
             data=data
         )
     else:
