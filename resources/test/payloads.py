@@ -99,3 +99,10 @@ update_patient_payload = {
         "Unit": ""
     }
 }
+
+create_medical_case_payload = {
+        "Patient_Id" : 1,
+        "Medical_case_name": "test",
+        "Medical_case_description": "test"
+}
+
