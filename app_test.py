@@ -113,7 +113,7 @@ class TestChalice(object):
                                           body=payload
                                           )
         assert response['statusCode'] == 200
-        assert response['body'] == expected_response()
+        assert response['body'] == expected_response('expected_update_patient')
 
     def test_create_medical_case(self, gateway_factory):
         gateway = gateway_factory()
