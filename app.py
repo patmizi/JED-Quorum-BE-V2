@@ -31,6 +31,12 @@ def create_medical_case():
     print(body_json)
     return { "Value": True }
 
+@app.route('/cases/{id}', methods=['PUT'], cors=True)
+def update_medical_case(id):
+    post_body = app.current_request.json_body
+    medical_case_store = MedicalCaseStore()
+    medicalcase = medical_case_store.update_medical_case(medical_case_id=id, params=post_body)
+    return json.dumps(medicalcase, cls=recursive_alchemy_encoder(), check_circular=False)
 ##
 ## /patients
 ##
