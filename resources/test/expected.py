@@ -85,14 +85,14 @@ responses = {
     "expected_create_medical_case": [{
         "Medical_Case_id": 1,
         "Patient_Id": 1,
-        "Medical_case_name": "test",
-        "Medical_case_description": "test"
+        "Medical_Case_Name": "test",
+        "Medical_Case_Description": "test"
      }],
     "expected_update_medical_case": [{
         "Medical_Case_Id": 1,
         "Patient_Id": 1,
-        "Medical_case_name": "updated",
-        "Medical_case_description": "updated"
+        "Medical_Case_Name": "updated",
+        "Medical_Case_Description": "updated"
     }]
 
 }
