@@ -106,3 +106,10 @@ create_medical_case_payload = {
         "Medical_case_description": "test"
 }
 
+update_medical_case_payload = {
+        "Medical_case_id": 1,
+        "Patient_Id" : 1,
+        "Medical_case_name": "updated",
+        "Medical_case_description": "updated"
+}
+
