@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
+                sh 'apt-get update && apt-get -y install sudo'
                 sh 'sudo pip install -r requirements.txt'
             }
         }
