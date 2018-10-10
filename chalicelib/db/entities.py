@@ -41,6 +41,7 @@ class Doctor(Base):
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
+    id = synonym("Doctor_Id")  # The encoder will remove this value from the returned  json
 
     medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, back_populates="doctors", lazy="joined")
     address = relationship('Address', lazy="joined")
@@ -53,6 +54,7 @@ class MedicalCase(Base):
     Medical_Case_Name = Column(String(30), nullable=False)
     Medical_Case_Description = Column(Text, nullable=False)
     Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
+    id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
 
     patient = relationship("Patient", lazy="joined")
     doctors = relationship('Doctor', secondary=MedicalCaseDoctors, back_populates="medical_cases", lazy="joined")
@@ -69,7 +71,7 @@ class Patient(Base):
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
-    # id = synonym("Patient_Id")
+    id = synonym("Patient_Id")  # The encoder will remove this value from the returned  json
 
     address = relationship('Address', lazy="joined")
 
@@ -86,5 +88,6 @@ class Receptionist(Base):
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
     User_Id = Column(String(50), nullable=False)
+    id = synonym("Receptionist_Id")  # The encoder will remove this value from the returned  json
 
     address = relationship('Address', lazy="joined")
