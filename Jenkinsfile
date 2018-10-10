@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'pip install --user -r requirements.txt'
+                sh 'sudo pip install -r requirements.txt'
             }
         }
         stage('Set Up Credentials') {
