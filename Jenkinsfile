@@ -11,15 +11,15 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'echo $(ls)'
-                sh 'sudo pip install -r requirements.txt'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Set Up Credentials') {
             steps {
-                sh 'sudo cat ${env.CONNECTION_CONFIG} >> ./chalicelib/connection/config.py'
-                sh 'sudo aws configure set aws_access_key_id ${env.AWS_ACCESS_KEY}'
-                sh 'sudo aws configure set aws_secret_access_key ${env.AWS_SECRET_ACCESS_KEY}'
-                sh 'sudo aws configure set region ap-southeast-2'
+                sh 'cat ${env.CONNECTION_CONFIG} >> ./chalicelib/connection/config.py'
+                sh 'aws configure set aws_access_key_id ${env.AWS_ACCESS_KEY}'
+                sh 'aws configure set aws_secret_access_key ${env.AWS_SECRET_ACCESS_KEY}'
+                sh 'aws configure set region ap-southeast-2'
             }
         }
         stage('Test') {
@@ -32,7 +32,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 sh 'source ./environment/prod_setup.sh'
-                sh 'sudo chalice deploy'
+                sh 'chalice deploy'
             }
         }
     }
