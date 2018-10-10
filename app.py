@@ -18,9 +18,9 @@ def index():
 ##
 @app.route('/cases/{id}', methods=['GET'], cors=True)
 def get_medical_case(id):
+    print("Case id = " + id)
     medical_case_store = MedicalCaseStore()
     case = medical_case_store.get_medical_case(id)
-    print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
 @app.route('/cases', methods=['POST'], cors=True)
@@ -33,7 +33,6 @@ def case_patient():
         medical_case_description=post_body.get('Medical_Case_Description'),
         patient_id=post_body.get('Patient_Id'),
         data=data
-
     )
 
 

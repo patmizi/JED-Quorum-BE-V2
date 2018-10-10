@@ -83,10 +83,28 @@ responses = {
         }
     }],
     "expected_create_medical_case": [{
-        "medical_Case_id": 1,
+        "Medical_Case_Description": "test",
+        "Medical_Case_Id": 1,
+        "Medical_Case_Name": "test",
         "Patient_Id": 1,
-        "Medical_case_name": "test",
-        "Medical_case_description": "test"
+        "doctors":[],
+        "patient":{ "AddressId": 3,
+        "Contact_Number": "0400000000",
+        "Date_Of_Birth": "12/01/1993",
+        "Email": "kullen.hatim.patient@lcelandic.com",
+        "First_Name": "Test",
+        "Gender": "M",
+        "Last_Name": "Test",
+        "Patient_Id": 1,
+        "address": {
+            "AddressId": 3,
+            "Country": "United States",
+            "Postcode": 10013,
+            "State": "NY",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": ""}
+            }
      }],
 
 }
