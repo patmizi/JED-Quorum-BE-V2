@@ -32,6 +32,7 @@ pipeline {
         }
         stage('Build and Deploy') {
             steps {
+                sh 'echo ./chalicelib/connection/prod_config.py > ./chalicelib/connection/config.py'
                 sh 'source ./environment/prod_setup.sh'
                 sh 'chalice deploy'
             }
