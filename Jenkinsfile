@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        image: 'python:3.6.6-slim-stretch',
+        image: 'python:3.6.6',
         label: 'python-slave',
     }
     environment {

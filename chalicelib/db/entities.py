@@ -69,7 +69,7 @@ class Patient(Base):
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
-    # id = synonym("Patient_Id")
+    id = synonym("Patient_Id")
 
     address = relationship('Address', lazy="joined")
 
