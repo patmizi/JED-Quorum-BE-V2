@@ -25,9 +25,14 @@ class Address(Base):
     Unit = Column(String(30), nullable=False)
 
 
-# class Appointment(Base):
-#     __tablename__ = "Appointment"
-#     pass
+class Appointment(Base):
+    __tablename__ = "Appointment"
+
+    Appointment_Id = Column(Integer, primary_key=True)
+    Date_Start = Column(Date, nullable=False)
+    Date_End = Column(Date, nullable=False)
+    Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
+    Doctor_Id = Column(ForeignKey('Doctor.Doctor_Id', ondelete='CASCADE'), index=True)
 
 class Doctor(Base):
     __tablename__ = "Doctor"

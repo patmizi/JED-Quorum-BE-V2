@@ -2,7 +2,7 @@ from chalicelib.lib import helpers
 
 from . import DatabaseSession
 from .store import MySqlStore
-from .entities import Doctor, Receptionist, Patient, Address, MedicalCase
+from .entities import Doctor, Receptionist, Patient, Address, MedicalCase, Appointment
 
 
 class DoctorStore(MySqlStore):
@@ -180,8 +180,45 @@ class MedicalCaseStore(MySqlStore):
 
             return self.get_medical_case(case.Medical_Case_Id)
 
-
     def update_medical_case(self, medical_case_id, params):
         self.update_object(entity=MedicalCase, medical_case_id=patient_id, params=params)
         return self.get_medical_case(medical_case_id)
 
+
+class AppointmentStore(MySqlStore):
+    def get_appointments_by_patient_id(self, patient_id):
+        with DatabaseSession() as session:
+            query = session.query(Appointment). \
+                filter(Appointment.Patient_Id == patient_id)
+            data = query.all()
+            return data
+
+    def get_appointments_by_doctor_id(self, doctor_id):
+        with DatabaseSession() as session:
+            query = session.query(Appointment). \
+                filter(Appointment.Doctor_Id == doctor_id)
+            data = query.all()
+            return data
+
+    def get_appointment_by_appointment_id(self, appointment_id):
+        with DatabaseSession() as session:
+            query = session.query(Appointment). \
+                filter(Appointment.Appointment_Id == appointment_id)
+            data = query.all()
+            return data
+
+    def add_appointment(self, patient_id, doctor_id, date_start, date_end):
+        date_start = helpers.get_date_from_string(date_start)
+        date_end = helpers.get_date_from_string(date_end)
+        entity = Appointment(
+            Date_Start=date_start,
+            Date_End=date_end,
+            Patient_Id=patient_id,
+            Doctor_Id=doctor_id
+        )
+        with DatabaseSession() as session:
+            session.add(entity)
+            session.flush()
+            session.commit()
+
+            self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
