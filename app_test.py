@@ -154,21 +154,16 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_create_appointment')
 
-    # def add_appointment(self, patient_id, doctor_id, date_start, date_end):
-    #     date_start = helpers.get_datetime_from_string(date_start)
-    #     date_end = helpers.get_datetime_from_string(date_end)
-    #     entity = Appointment(
-    #         Date_Start=date_start,
-    #         Date_End=date_end,
-    #         Patient_Id=patient_id,
-    #         Doctor_Id=doctor_id
-    #     )
-    #     with DatabaseSession() as session:
-    #         session.add(entity)
-    #         session.flush()
-    #         session.commit()
-    #
-    #         return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+
+    def test_get_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/1',
+                                          headers={},
+                                          bodgit y=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment')
     #
     #
     # def test_get_appointments(self, gateway_factory):
