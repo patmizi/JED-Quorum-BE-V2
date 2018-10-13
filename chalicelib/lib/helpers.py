@@ -23,3 +23,7 @@ def get_datetime_from_string(datetime_str):
     print(datetime_order)
     return datetime_order
 
+#Given datetime object, this should return a string in and acceptable format
+def iso_date(date_obj):
+    if isinstance(date_obj, datetime):
+        return date_obj.__str__()
