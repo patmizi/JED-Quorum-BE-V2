@@ -1,6 +1,6 @@
 from chalicelib.lib import helpers
+from datetime import datetime
 from chalicelib.lib.exceptions import NotFoundException
-
 from . import DatabaseSession
 from .store import MySqlStore
 from .entities import Doctor, Receptionist, Patient, Address, MedicalCase, Appointment
@@ -221,9 +221,37 @@ class AppointmentStore(MySqlStore):
             data = query.all()
             return data
 
+    def get_all_appointments(self):
+        with DatabaseSession() as session:
+            query = session.query(Appointment)
+            data = query.all()
+            return data
+
+    def get_all_upcoming_appointments(self):
+        c_time = datetime.now()
+        with DatabaseSession() as session:
+            query = session.query(Appointment).filter(Appointment.Date_Start >= c_time)
+            data = query.all()
+            return data
+
+    def get_upcoming_appointments_by_doctor_id(self, doctor_id):
+        c_time = datetime.now()
+        with DatabaseSession() as session:
+            query = session.query(Appointment).filter(Appointment.Doctor_Id == doctor_id
+                                                      and Appointment.Date_Start >= c_time)
+            data = query.all()
+            return data
+
+    def delete_appointment(self, appointment_id):
+        print(datetime.now())
+        with DatabaseSession() as session:
+            session.query(Appointment).filter(Appointment.Appointment_Id == appointment_id).delete()
+            session.flush()
+            session.commit()
+
     def add_appointment(self, patient_id, doctor_id, date_start, date_end):
-        date_start = helpers.get_date_from_string(date_start)
-        date_end = helpers.get_date_from_string(date_end)
+        date_start = helpers.get_datetime_from_string(date_start)
+        date_end = helpers.get_datetime_from_string(date_end)
         entity = Appointment(
             Date_Start=date_start,
             Date_End=date_end,
@@ -235,4 +263,4 @@ class AppointmentStore(MySqlStore):
             session.flush()
             session.commit()
 
-            self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+            return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
