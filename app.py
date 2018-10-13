@@ -241,4 +241,15 @@ def delete_appointment(id):
     appointment_store = AppointmentStore()
     appointment_store.delete_appointment(id)
     return {"result": "true"}
-#
+
+@app.route('/appointments/upcoming', methods=['GET'], cors=True)
+def get_upcoming_appointments():
+    appointment_store = AppointmentStore()
+    appointments = appointment_store.get_all_upcoming_appointments()
+    return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/upcoming/doctor/{id}', methods=['GET'], cors=True)
+def get_upcoming_appointments_doctor(id):
+    appointment_store = AppointmentStore()
+    appointments = appointment_store.get_upcoming_appointments_by_doctor_id(id)
+    return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)

@@ -1,5 +1,5 @@
 from chalicelib.lib import helpers
-
+from datetime import datetime
 from . import DatabaseSession
 from .store import MySqlStore
 from .entities import Doctor, Receptionist, Patient, Address, MedicalCase, Appointment
@@ -213,7 +213,23 @@ class AppointmentStore(MySqlStore):
             data = query.all()
             return data
 
+    def get_all_upcoming_appointments(self):
+        c_time = datetime.now()
+        with DatabaseSession() as session:
+            query = session.query(Appointment).filter(Appointment.Date_Start >= c_time)
+            data = query.all()
+            return data
+
+    def get_upcoming_appointments_by_doctor_id(self, doctor_id):
+        c_time = datetime.now()
+        with DatabaseSession() as session:
+            query = session.query(Appointment).filter(Appointment.Doctor_Id == doctor_id
+                                                      and Appointment.Date_Start >= c_time)
+            data = query.all()
+            return data
+
     def delete_appointment(self, appointment_id):
+        print(datetime.now())
         with DatabaseSession() as session:
             session.query(Appointment).filter(Appointment.Appointment_Id == appointment_id).delete()
             session.flush()
