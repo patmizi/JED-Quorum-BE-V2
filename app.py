@@ -1,7 +1,7 @@
 import json
 
 from chalice import Chalice
-from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, PatientStore, MedicalCaseStore
+from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, PatientStore, MedicalCaseStore, AppointmentStore
 from chalicelib.lib.encoders import recursive_alchemy_encoder
 
 app = Chalice(app_name='quorum')
@@ -206,3 +206,61 @@ def register_user():
         app.log.error('[x] BUSINESS ROLE NOT FOUND')
         raise ValueError('business_role')
     return {"result": "true"}
+
+#
+# Appointment Block
+#
+@app.route('/appointments', methods=['POST'], cors=True)
+def add_appointment():
+    post_body = app.current_request.json_body
+    appointment_store = AppointmentStore()
+    appointment = appointment_store.add_appointment(
+        patient_id=post_body.get('Patient_Id'),
+        doctor_id=post_body.get('Doctor_Id'),
+        date_start=post_body.get('Start_Date'),
+        date_end=post_body.get('End_Date'),
+    )
+    return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+@app.route('/appointments', methods=['GET'], cors=True)
+def get_appointments():
+    appointment_store = AppointmentStore()
+    appointments = appointment_store.get_all_appointments()
+    return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/{id}', methods=['GET'], cors=True)
+def get_appointment(id):
+    appointment_store = AppointmentStore()
+    appointment = appointment_store.get_appointment_by_appointment_id(id)
+    return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/patient/{id}', methods=['GET'], cors=True)
+def get_appointment(id):
+    appointment_store = AppointmentStore()
+    appointment = appointment_store.get_appointments_by_patient_id(id)
+    return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/doctor/{id}', methods=['GET'], cors=True)
+def get_appointment(id):
+    appointment_store = AppointmentStore()
+    appointment = appointment_store.get_appointments_by_doctor_id(id)
+    return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/{id}', methods=['DELETE'], cors=True)
+def delete_appointment(id):
+    appointment_store = AppointmentStore()
+    appointment_store.delete_appointment(id)
+    return {"result": "true"}
+
+@app.route('/appointments/upcoming', methods=['GET'], cors=True)
+def get_upcoming_appointments():
+    appointment_store = AppointmentStore()
+    appointments = appointment_store.get_all_upcoming_appointments()
+    return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+
+@app.route('/appointments/upcoming/doctor/{id}', methods=['GET'], cors=True)
+def get_upcoming_appointments_doctor(id):
+    appointment_store = AppointmentStore()
+    appointments = appointment_store.get_upcoming_appointments_by_doctor_id(id)
+    return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
