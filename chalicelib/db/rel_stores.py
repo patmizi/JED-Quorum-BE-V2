@@ -164,15 +164,19 @@ class MedicalCaseStore(MySqlStore):
             Medical_Case_Description=medical_case_description,
             Patient_Id=patient_id
         )
-
-        # if data.get('doctors') is not None:
-        #     case.doctors = []
-        #     for d in data.get('doctors'):
-        #         case.doctors.append(
-        #             Doctor(
-        #                 doctor_id=d.get('Doctor_Id')
-        #             )
-        #         )
+        if data.get('doctors') is not None:
+            case.doctors = []
+            for doc in data.get('doctors'):
+                doctor = Doctor(
+                    Doctor_Id=doc.get('Doctor_Id'),
+                    First_Name=doc.get('First_Name'),
+                    Last_Name=doc.get('Last_Name'),
+                    Date_Of_Birth=doc.get('Date_Of_Birth'),
+                    Contact_Number=doc.get('Contact_Number'),
+                    Gender=doc.get('Gender'),
+                    Email=doc.get('Email')
+                )
+                case.doctors.append(doctor)
         with DatabaseSession() as session:
             session.add(case)
             session.flush()

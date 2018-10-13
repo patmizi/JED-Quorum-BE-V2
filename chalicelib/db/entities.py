@@ -8,8 +8,8 @@ metadata = Base.metadata
 MedicalCaseDoctors = Table(
     'MedicalCaseDoctors',
     Base.metadata,
-    Column('Medical_Case_Id', Integer, ForeignKey('MedicalCase.Medical_Case_Id')),
-    Column('Doctor_Id', Integer, ForeignKey('Doctor.Doctor_Id'))
+    Column('Medical_Case_Id', Integer, ForeignKey('MedicalCase.Medical_Case_Id'), primary_key=True),
+    Column('Doctor_Id', Integer, ForeignKey('Doctor.Doctor_Id'), primary_key=True)
 )
 
 
@@ -59,9 +59,10 @@ class MedicalCase(Base):
     Medical_Case_Name = Column(String(30), nullable=False)
     Medical_Case_Description = Column(Text, nullable=False)
     Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
-    #id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
+    id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
+
     patient = relationship("Patient", lazy="joined")
-    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, back_populates="medical_cases", lazy="joined")
+    doctors = relationship('Doctor', secondary=MedicalCaseDoctors)
 
 
 class Patient(Base):
