@@ -19,7 +19,7 @@ def serialize_date(date_obj):
 
 # Date Time string to obj function
 def get_datetime_from_string(datetime_str):
-    datetime_order = datetime.strptime(datetime_str, '%d/%m/%Y %H:%M:%S.%f')
+    datetime_order = datetime.strptime(datetime_str, '%d/%m/%Y %H:%M:%S')
     print(datetime_order)
     return datetime_order
 

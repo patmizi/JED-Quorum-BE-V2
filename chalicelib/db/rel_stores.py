@@ -207,6 +207,12 @@ class AppointmentStore(MySqlStore):
             data = query.all()
             return data
 
+    def get_all_appointments(self):
+        with DatabaseSession() as session:
+            query = session.query(Appointment)
+            data = query.all()
+            return data
+
     def add_appointment(self, patient_id, doctor_id, date_start, date_end):
         date_start = helpers.get_datetime_from_string(date_start)
         date_end = helpers.get_datetime_from_string(date_end)
