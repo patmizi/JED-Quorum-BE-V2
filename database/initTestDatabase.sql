@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS MedicalCase (
 );
 
 CREATE TABLE IF NOT EXISTS MedicalCaseDoctors (
-  Medical_Case_Id integer,
-  Doctor_Id integer
+  Medical_Case_Id integer primary key,
+  Doctor_Id integer primary key
 );
 
 CREATE TABLE IF NOT EXISTS Appointment (
