@@ -111,7 +111,14 @@ responses = {
         "Patient_Id": 1,
         "Medical_Case_Name": "updated",
         "Medical_Case_Description": "updated"
-    }]
+    }],
+    "expected_create_appointment": [{
+        "Appointment_Id": 1,
+        "Date_End": "2019-02-02 23:30:00",
+        "Date_Start": "2019-02-01 22:30:00",
+        "Doctor_Id": 1,
+        "Patient_Id": 1
+    }],
 
 }
 

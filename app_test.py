@@ -2,7 +2,7 @@ import json
 import os
 import pytest
 from app import app
-from resources.test.payloads import register_doctor_payload, register_receptionist_payload, add_patient_payload, update_patient_payload, create_medical_case_payload, update_medical_case_payload
+from resources.test.payloads import *
 from resources.test.headers import common_post_header
 from resources.test.expected import expected_response
 
@@ -139,3 +139,85 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_update_medical_case')
 
+
+#
+# Appointments
+#
+    def test_create_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        payload = json.dumps(create_appointment_payload)
+        response = gateway.handle_request(method='POST',
+                                          path='/appointments',
+                                          headers=common_post_header,
+                                          body=payload
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_create_appointment')
+
+    # def add_appointment(self, patient_id, doctor_id, date_start, date_end):
+    #     date_start = helpers.get_datetime_from_string(date_start)
+    #     date_end = helpers.get_datetime_from_string(date_end)
+    #     entity = Appointment(
+    #         Date_Start=date_start,
+    #         Date_End=date_end,
+    #         Patient_Id=patient_id,
+    #         Doctor_Id=doctor_id
+    #     )
+    #     with DatabaseSession() as session:
+    #         session.add(entity)
+    #         session.flush()
+    #         session.commit()
+    #
+    #         return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+    #
+    #
+    # def test_get_appointments(self, gateway_factory):
+    #     gateway = gateway_factory()
+    #     response = gateway.handle_request(method='GET',
+    #                                       path='/appointments',
+    #                                       headers={},
+    #                                       body=''
+    #                                       )
+    #     assert response['statusCode'] == 200
+    #     assert response['body'] == expected_response('expected_get_receptionist')
+    # @app.route('/appointments', methods=['GET'], cors=True)
+    # def get_appointments():
+    #     appointment_store = AppointmentStore()
+    #     appointments = appointment_store.get_all_appointments()
+    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+    #
+    # @app.route('/appointments/{id}', methods=['GET'], cors=True)
+    # def get_appointment(id):
+    #     appointment_store = AppointmentStore()
+    #     appointment = appointment_store.get_appointment_by_appointment_id(id)
+    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+    #
+    # @app.route('/appointments/patient/{id}', methods=['GET'], cors=True)
+    # def get_appointment(id):
+    #     appointment_store = AppointmentStore()
+    #     appointment = appointment_store.get_appointments_by_patient_id(id)
+    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+    #
+    # @app.route('/appointments/doctor/{id}', methods=['GET'], cors=True)
+    # def get_appointment(id):
+    #     appointment_store = AppointmentStore()
+    #     appointment = appointment_store.get_appointments_by_doctor_id(id)
+    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+    #
+    # @app.route('/appointments/{id}', methods=['DELETE'], cors=True)
+    # def delete_appointment(id):
+    #     appointment_store = AppointmentStore()
+    #     appointment_store.delete_appointment(id)
+    #     return {"result": "true"}
+    #
+    # @app.route('/appointments/upcoming', methods=['GET'], cors=True)
+    # def get_upcoming_appointments():
+    #     appointment_store = AppointmentStore()
+    #     appointments = appointment_store.get_all_upcoming_appointments()
+    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+    #
+    # @app.route('/appointments/upcoming/doctor/{id}', methods=['GET'], cors=True)
+    # def get_upcoming_appointments_doctor(id):
+    #     appointment_store = AppointmentStore()
+    #     appointments = appointment_store.get_upcoming_appointments_by_doctor_id(id)
+    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)

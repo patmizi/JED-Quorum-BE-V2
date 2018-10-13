@@ -114,3 +114,13 @@ update_medical_case_payload = {
         "Medical_Case_Description": "updated"
 }
 
+#
+# Appointment Test cases
+#
+create_appointment_payload = {
+        "Patient_Id":1,
+        "Doctor_Id":1,
+        "Start_Date":"01/02/2019 22:30:00",
+        "End_Date":"02/02/2019 23:30:00"
+}
+
