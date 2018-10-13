@@ -104,9 +104,15 @@ class ReceptionistStore(MySqlStore):
 class PatientStore(MySqlStore):
     def get_all_patients(self):
         with DatabaseSession() as session:
-            query = session.query(Patient)
-            data = query.all()
-            return data
+            patients = session.query(Patient).all()
+            for patient in patients:
+                patient.cases = []
+                cases = session.query(MedicalCase). \
+                    filter(MedicalCase.Patient_Id == patient.Patient_Id). \
+                    all()
+                if cases is not None:
+                    patient.cases = cases
+            return patients
 
     def get_patient(self, patient_id):
         with DatabaseSession() as session:
