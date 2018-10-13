@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, ForeignKey, Integer, String, Table, Text
+from sqlalchemy import Column, Date, ForeignKey, Integer, String, Table, Text, DateTime
 from sqlalchemy.orm import relationship, synonym
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -29,8 +29,8 @@ class Appointment(Base):
     __tablename__ = "Appointment"
 
     Appointment_Id = Column(Integer, primary_key=True)
-    Date_Start = Column(Date, nullable=False)
-    Date_End = Column(Date, nullable=False)
+    Date_Start = Column(DateTime, nullable=False)
+    Date_End = Column(DateTime, nullable=False)
     Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
     Doctor_Id = Column(ForeignKey('Doctor.Doctor_Id', ondelete='CASCADE'), index=True)
 

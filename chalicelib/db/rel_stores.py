@@ -208,8 +208,8 @@ class AppointmentStore(MySqlStore):
             return data
 
     def add_appointment(self, patient_id, doctor_id, date_start, date_end):
-        date_start = helpers.get_date_from_string(date_start)
-        date_end = helpers.get_date_from_string(date_end)
+        date_start = helpers.get_datetime_from_string(date_start)
+        date_end = helpers.get_datetime_from_string(date_end)
         entity = Appointment(
             Date_Start=date_start,
             Date_End=date_end,
@@ -222,4 +222,3 @@ class AppointmentStore(MySqlStore):
             session.commit()
 
             return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
-
