@@ -235,17 +235,10 @@ def get_appointment(id):
     appointment_store = AppointmentStore()
     appointment = appointment_store.get_appointments_by_doctor_id(id)
     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
-#
-#
-# @app.route('/patients/{id}', methods=['DELETE'], cors=True)
-# def delete_patient(id):
-#     patient_store = PatientStore()
-#     patient_store.delete_patient(patient_id=id)
-#     return {"result": "true"}
-#
-# @app.route('/patients/{id}', methods=['DELETE'], cors=True)
-# def delete_patient(id):
-#     patient_store = PatientStore()
-#     patient_store.delete_patient(patient_id=id)
-#     return {"result": "true"}
+
+@app.route('/appointments/{id}', methods=['DELETE'], cors=True)
+def delete_appointment(id):
+    appointment_store = AppointmentStore()
+    appointment_store.delete_appointment(id)
+    return {"result": "true"}
 #

@@ -213,6 +213,12 @@ class AppointmentStore(MySqlStore):
             data = query.all()
             return data
 
+    def delete_appointment(self, appointment_id):
+        with DatabaseSession() as session:
+            session.query(Appointment).filter(Appointment.Appointment_Id == appointment_id).delete()
+            session.flush()
+            session.commit()
+
     def add_appointment(self, patient_id, doctor_id, date_start, date_end):
         date_start = helpers.get_datetime_from_string(date_start)
         date_end = helpers.get_datetime_from_string(date_end)
