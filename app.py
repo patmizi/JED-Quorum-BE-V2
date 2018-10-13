@@ -28,14 +28,14 @@ def case_patient():
     post_body = app.current_request.json_body
     medical_case_store = MedicalCaseStore()
     data = {}
+    if post_body.get('doctors') is not None:
+        data['doctors'] = post_body.get('doctors')
     case = medical_case_store.add_medical_case(
         medical_case_name=post_body.get('Medical_Case_Name'),
         medical_case_description=post_body.get('Medical_Case_Description'),
         patient_id=post_body.get('Patient_Id'),
         data=data
     )
-
-
     print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 

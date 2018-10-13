@@ -45,10 +45,10 @@ class Doctor(Base):
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
-    User_Id = Column(String(50), nullable=False)
+    User_Id = Column(String(50), nullable=False, default="")
     id = synonym("Doctor_Id")  # The encoder will remove this value from the returned  json
 
-    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, back_populates="doctors", lazy="joined")
+    #medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, lazy="joined")
     address = relationship('Address', lazy="joined")
 
 
@@ -62,7 +62,7 @@ class MedicalCase(Base):
     id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
 
     patient = relationship("Patient", lazy="joined")
-    doctors = relationship('Doctor', secondary=MedicalCaseDoctors)
+    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, lazy='joined')
 
 
 class Patient(Base):
