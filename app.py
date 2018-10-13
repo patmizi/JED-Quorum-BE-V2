@@ -1,7 +1,7 @@
 import json
 
 from chalice import Chalice
-from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, PatientStore, MedicalCaseStore
+from chalicelib.db.rel_stores import DoctorStore, ReceptionistStore, PatientStore, MedicalCaseStore, AppointmentStore
 from chalicelib.lib.encoders import recursive_alchemy_encoder
 
 app = Chalice(app_name='quorum')
@@ -195,3 +195,42 @@ def register_user():
         app.log.error('[x] BUSINESS ROLE NOT FOUND')
         raise ValueError('business_role')
     return {"result": "true"}
+
+#
+# Appointment Block
+#
+@app.route('/appointments', methods=['POST'], cors=True)
+def add_appointment():
+    post_body = app.current_request.json_body
+    appointment_store = AppointmentStore()
+    appointment = appointment_store.add_appointment(
+        patient_id=post_body.get('Patient_Id'),
+        doctor_id=post_body.get('Doctor_Id'),
+        date_start=post_body.get('Start_Date'),
+        date_end=post_body.get('End_Date'),
+    )
+    return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
+# @app.route('/appointments', methods=['GET'], cors=True)
+# def get_appointments():
+#     patient_store = PatientStore()
+#     patients = patient_store.get_all_patients()
+#     print(patients)
+#     return json.dumps(patients, cls=recursive_alchemy_encoder(), check_circular=False)
+#
+#
+# @app.route('/appointments/{id}', methods=['GET'], cors=True)
+# def get_appointment(id):
+#     patient_store = PatientStore()
+#     patient = patient_store.get_patient(id)
+#     print(patient)
+#     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
+#
+#
+# @app.route('/patients/{id}', methods=['DELETE'], cors=True)
+# def delete_patient(id):
+#     patient_store = PatientStore()
+#     patient_store.delete_patient(patient_id=id)
+#     return {"result": "true"}
+#

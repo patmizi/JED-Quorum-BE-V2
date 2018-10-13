@@ -221,4 +221,5 @@ class AppointmentStore(MySqlStore):
             session.flush()
             session.commit()
 
-            self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+            return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+
