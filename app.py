@@ -97,7 +97,6 @@ def add_patient():
     print(patient)
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
-
 @app.route('/patients/{id}', methods=['PUT'], cors=True)
 def update_patient(id):
     post_body = app.current_request.json_body

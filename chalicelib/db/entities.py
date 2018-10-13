@@ -48,7 +48,6 @@ class Doctor(Base):
     User_Id = Column(String(50), nullable=False, default="")
     id = synonym("Doctor_Id")  # The encoder will remove this value from the returned  json
 
-    #medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, lazy="joined")
     address = relationship('Address', lazy="joined")
 
 

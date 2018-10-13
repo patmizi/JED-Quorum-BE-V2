@@ -109,10 +109,14 @@ class PatientStore(MySqlStore):
 
     def get_patient(self, patient_id):
         with DatabaseSession() as session:
-            query = session.query(Patient). \
-                filter(Patient.Patient_Id == patient_id)
-            data = query.all()
-            return data
+            patient = session.query(Patient).get(patient_id)
+            patient.cases = []
+            cases = session.query(MedicalCase). \
+                filter(MedicalCase.Patient_Id == patient_id). \
+                all()
+            if cases is not None:
+                patient.cases = cases
+            return patient
 
     def add_patient(self, first_name, last_name, gender, date_of_birth, contact_number, email, data):
         date_of_birth = helpers.get_date_from_string(date_of_birth)
@@ -235,4 +239,4 @@ class AppointmentStore(MySqlStore):
             session.flush()
             session.commit()
 
-            self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+        self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
