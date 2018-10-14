@@ -62,10 +62,11 @@ CREATE TABLE IF NOT EXISTS MedicalCase(
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS MedicalCaseDoctors(
-  Medical_Case_Id INT PRIMARY KEY,
-  Doctor_Id INT PRIMARY KEY,
+  Medical_Case_Id INT,
+  Doctor_Id INT,
   FOREIGN KEY (Medical_Case_Id) REFERENCES MedicalCase(Medical_Case_Id),
-  FOREIGN KEY (Doctor_Id) REFERENCES Doctor(Doctor_Id)
+  FOREIGN KEY (Doctor_Id) REFERENCES Doctor(Doctor_Id),
+  PRIMARY KEY (Medical_Case_Id, Doctor_Id)
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Appointment(
@@ -78,6 +79,3 @@ CREATE TABLE IF NOT EXISTS Appointment(
   FOREIGN KEY (Doctor_Id) REFERENCES Doctor(Doctor_Id),
   PRIMARY KEY (Appointment_Id)
 )ENGINE=InnoDB;
-
-
-
