@@ -101,6 +101,8 @@ def add_patient():
 def update_patient(id):
     post_body = app.current_request.json_body
     patient_store = PatientStore()
+    if post_body.get('cases') is not None:
+        post_body.pop('cases', None)
     patient = patient_store.update_patient(patient_id=id, params=post_body)
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
