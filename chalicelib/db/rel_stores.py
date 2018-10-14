@@ -1,5 +1,7 @@
 from chalicelib.lib import helpers
 from datetime import datetime
+from chalicelib.lib.exceptions import NotFoundException
+
 from . import DatabaseSession
 from .store import MySqlStore
 from .entities import Doctor, Receptionist, Patient, Address, MedicalCase, Appointment
@@ -102,16 +104,26 @@ class ReceptionistStore(MySqlStore):
 class PatientStore(MySqlStore):
     def get_all_patients(self):
         with DatabaseSession() as session:
-            query = session.query(Patient)
-            data = query.all()
-            return data
+            patients = session.query(Patient).all()
+            for patient in patients:
+                patient.cases = []
+                cases = session.query(MedicalCase). \
+                    filter(MedicalCase.Patient_Id == patient.Patient_Id). \
+                    all()
+                if cases is not None:
+                    patient.cases = cases
+            return patients
 
     def get_patient(self, patient_id):
         with DatabaseSession() as session:
-            query = session.query(Patient). \
-                filter(Patient.Patient_Id == patient_id)
-            data = query.all()
-            return data
+            patient = session.query(Patient).get(patient_id)
+            patient.cases = []
+            cases = session.query(MedicalCase). \
+                filter(MedicalCase.Patient_Id == patient_id). \
+                all()
+            if cases is not None:
+                patient.cases = cases
+            return patient
 
     def add_patient(self, first_name, last_name, gender, date_of_birth, contact_number, email, data):
         date_of_birth = helpers.get_date_from_string(date_of_birth)
@@ -155,7 +167,7 @@ class MedicalCaseStore(MySqlStore):
         with DatabaseSession() as session:
             query = session.query(MedicalCase). \
                 filter(MedicalCase.Medical_Case_Id == medical_case_id)
-            data = query.all()
+            data = query.first()
             return data
 
     def add_medical_case(self, medical_case_name, medical_case_description, patient_id, data):
@@ -164,24 +176,37 @@ class MedicalCaseStore(MySqlStore):
             Medical_Case_Description=medical_case_description,
             Patient_Id=patient_id
         )
-
-        # if data.get('doctors') is not None:
-        #     case.doctors = []
-        #     for d in data.get('doctors'):
-        #         case.doctors.append(
-        #             Doctor(
-        #                 doctor_id=d.get('Doctor_Id')
-        #             )
-        #         )
         with DatabaseSession() as session:
+            if data.get('doctors') is not None:
+                case.doctors = []
+                for doc in data.get('doctors'):
+                    doctor = session.query(Doctor).get(doc.get('Doctor_Id'))
+                    # We can handle errors here too
+                    if doctor:
+                        case.doctors.append(doctor)
             session.add(case)
             session.flush()
             session.commit()
 
             return self.get_medical_case(case.Medical_Case_Id)
 
-    def update_medical_case(self, medical_case_id, params):
-        self.update_object(entity=MedicalCase, medical_case_id=patient_id, params=params)
+    def update_medical_case(self, medical_case_id, medical_case_name, medical_case_description, patient_id, data):
+        with DatabaseSession() as session:
+            case = session.query(MedicalCase).get(medical_case_id)
+            if not case:
+                raise NotFoundException()
+            case.Medical_Case_Name = medical_case_name
+            case.Medical_Case_Description = medical_case_description
+            patient = session.query(Patient).get(patient_id)
+            if not patient:
+                raise NotFoundException()
+            if data.get('doctors') is not None:
+                case.doctors = []
+                for doc in data.get('doctors'):
+                    doctor = session.query(Doctor).get(doc.get('Doctor_Id'))
+                    if doctor:
+                        case.doctors.append(doctor)
+            session.commit()
         return self.get_medical_case(medical_case_id)
 
 
@@ -249,4 +274,4 @@ class AppointmentStore(MySqlStore):
             session.flush()
             session.commit()
 
-            return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)
+        return self.get_appointment_by_appointment_id(appointment_id=entity.Appointment_Id)

@@ -28,14 +28,14 @@ def case_patient():
     post_body = app.current_request.json_body
     medical_case_store = MedicalCaseStore()
     data = {}
+    if post_body.get('doctors') is not None:
+        data['doctors'] = post_body.get('doctors')
     case = medical_case_store.add_medical_case(
         medical_case_name=post_body.get('Medical_Case_Name'),
         medical_case_description=post_body.get('Medical_Case_Description'),
         patient_id=post_body.get('Patient_Id'),
         data=data
     )
-
-
     print(case)
     return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
 
@@ -43,8 +43,20 @@ def case_patient():
 def update_medical_case(id):
     post_body = app.current_request.json_body
     medical_case_store = MedicalCaseStore()
-    medicalcase = medical_case_store.update_medical_case(medical_case_id=id, params=post_body)
-    return json.dumps(medicalcase, cls=recursive_alchemy_encoder(), check_circular=False)
+    data = {}
+    if post_body.get('doctors') is not None:
+        data['doctors'] = post_body.get('doctors')
+    case = medical_case_store.update_medical_case(
+        medical_case_id=id,
+        medical_case_name=post_body.get('Medical_Case_Name'),
+        medical_case_description=post_body.get('Medical_Case_Description'),
+        patient_id=post_body.get('Patient_Id'),
+        data=data
+    )
+    print(case)
+    return json.dumps(case, cls=recursive_alchemy_encoder(), check_circular=False)
+
+
 ##
 ## /patients
 ##
@@ -85,7 +97,6 @@ def add_patient():
     print(patient)
     return json.dumps(patient, cls=recursive_alchemy_encoder(), check_circular=False)
 
-
 @app.route('/patients/{id}', methods=['PUT'], cors=True)
 def update_patient(id):
     post_body = app.current_request.json_body
@@ -112,7 +123,7 @@ def get_doctor(id):
     return json.dumps(doctor, cls=recursive_alchemy_encoder(), check_circular=False)
 
 
-# @app.route('/doctors/{id}', methods=['PATCH'], cors=True)
+# @app.route('/doctors/{id}', methods=['PUT'], cors=True)
 # def update_doctor(id):
 #     doctor_store = DoctorStore()
 #     updated_doctor = doctor_store.update_doctor(id)

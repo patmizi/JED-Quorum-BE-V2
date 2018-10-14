@@ -8,8 +8,8 @@ metadata = Base.metadata
 MedicalCaseDoctors = Table(
     'MedicalCaseDoctors',
     Base.metadata,
-    Column('Medical_Case_Id', Integer, ForeignKey('MedicalCase.Medical_Case_Id')),
-    Column('Doctor_Id', Integer, ForeignKey('Doctor.Doctor_Id'))
+    Column('Medical_Case_Id', Integer, ForeignKey('MedicalCase.Medical_Case_Id'), primary_key=True),
+    Column('Doctor_Id', Integer, ForeignKey('Doctor.Doctor_Id'), primary_key=True)
 )
 
 
@@ -45,10 +45,9 @@ class Doctor(Base):
     Contact_Number = Column(String(15), nullable=False)
     Email = Column(String(50), nullable=False)
     AddressId = Column(ForeignKey('Address.AddressId', ondelete='CASCADE'), index=True)
-    User_Id = Column(String(50), nullable=False)
+    User_Id = Column(String(50), nullable=False, default="")
     id = synonym("Doctor_Id")  # The encoder will remove this value from the returned  json
 
-    medical_cases = relationship('MedicalCase', secondary=MedicalCaseDoctors, back_populates="doctors", lazy="joined")
     address = relationship('Address', lazy="joined")
 
 
@@ -59,9 +58,10 @@ class MedicalCase(Base):
     Medical_Case_Name = Column(String(30), nullable=False)
     Medical_Case_Description = Column(Text, nullable=False)
     Patient_Id = Column(ForeignKey('Patient.Patient_Id', ondelete='CASCADE'), index=True)
-    #id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
+    id = synonym("Medical_Case_Id")  # The encoder will remove this value from the returned  json
+
     patient = relationship("Patient", lazy="joined")
-    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, back_populates="medical_cases", lazy="joined")
+    doctors = relationship('Doctor', secondary=MedicalCaseDoctors, lazy='joined')
 
 
 class Patient(Base):
