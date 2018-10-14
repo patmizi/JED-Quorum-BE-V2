@@ -21,8 +21,7 @@ responses = {
           "Street": "17 Greenwich St",
           "Suburb": "",
           "Unit": ""
-        },
-        "medical_cases": []
+        }
     }],
     "expected_get_receptionist": [{
         "AddressId": 2,
@@ -44,7 +43,7 @@ responses = {
             "Unit": ""
         }
     }],
-    "expected_add_patient": [{
+    "expected_add_patient": {
         "AddressId": 3,
         "Contact_Number": "0400000000",
         "Date_Of_Birth": "12/01/1993",
@@ -60,10 +59,38 @@ responses = {
             "State": "NY",
             "Street": "17 Greenwich St",
             "Suburb": "",
-            "Unit": ""
-        }
-    }],
-    "expected_update_patient": [{
+            "Unit": "",
+        },
+        "cases": [],
+
+    },
+    "expected_update_patient": {
+        "AddressId": 3,
+        "Contact_Number": "0400000000",
+        "Date_Of_Birth": "12/01/1993",
+        "Email": "kullen.hatim.patient@lcelandic.com",
+        "First_Name": "Updated",
+        "Gender": "M",
+        "Last_Name": "Test",
+        "Patient_Id": 1,
+        "address": {
+            "AddressId": 3,
+            "Country": "Australia",
+            "Postcode": 10013,
+            "State": "NSW",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": "",
+        },
+        "cases": [],
+    },
+    "expected_create_medical_case": {
+            "Medical_Case_Description": "test",
+    "Medical_Case_Id": 1,
+    "Medical_Case_Name": "test",
+    "Patient_Id": 1,
+    "doctors": [],
+    "patient": {
         "AddressId": 3,
         "Contact_Number": "0400000000",
         "Date_Of_Birth": "12/01/1993",
@@ -81,37 +108,54 @@ responses = {
             "Suburb": "",
             "Unit": ""
         }
-    }],
-    "expected_create_medical_case": [{
+    }},
+    "expected_update_medical_case": {
         "Medical_Case_Description": "test",
-        "Medical_Case_Id": 1,
+        "Medical_Case_Id": 2,
         "Medical_Case_Name": "test",
         "Patient_Id": 1,
-        "doctors":[],
-        "patient":{ "AddressId": 3,
-        "Contact_Number": "0400000000",
-        "Date_Of_Birth": "12/01/1993",
-        "Email": "kullen.hatim.patient@lcelandic.com",
-        "First_Name": "Test",
-        "Gender": "M",
-        "Last_Name": "Test",
-        "Patient_Id": 1,
-        "address": {
-            "AddressId": 3,
-            "Country": "United States",
-            "Postcode": 10013,
-            "State": "NY",
-            "Street": "17 Greenwich St",
-            "Suburb": "",
-            "Unit": ""}
-            }
-     }],
-    "expected_update_medical_case": [{
-        "Medical_Case_Id": 1,
-        "Patient_Id": 1,
-        "Medical_Case_Name": "updated",
-        "Medical_Case_Description": "updated"
-    }],
+        "doctors": [
+            {"AddressId": 1,
+             "Contact_Number": "0987654321234567",
+             "Date_Of_Birth": "12/01/1993",
+             "Doctor_Id": 1,
+             "Email": "kullen.hatim@lcelandic.com",
+             "First_Name": "Test",
+             "Gender": "F",
+             "Last_Name": "Test",
+             "User_Id": "17d5b44c-1472-4445-a9d0-d63dabbe369f",
+             "address":
+                 {"AddressId": 1,
+                  "Country": "United States",
+                  "Postcode": 10013,
+                  "State": "NY",
+                  "Street": "17 Greenwich St",
+                  "Suburb": "",
+                  "Unit": ""
+                  }
+             }
+        ],
+        "patient":
+            {"AddressId": 3,
+             "Contact_Number": "0400000000",
+             "Date_Of_Birth": "12/01/1993",
+             "Email": "kullen.hatim.patient@lcelandic.com",
+             "First_Name": "Updated",
+             "Gender": "M",
+             "Last_Name": "Test",
+             "Patient_Id": 1,
+             "address": {
+                 "AddressId": 3,
+                 "Country": "Australia",
+                 "Postcode": 10013,
+                 "State": "NSW",
+                 "Street": "17 Greenwich St",
+                 "Suburb": "",
+                 "Unit": ""
+             }
+             }
+    },
+
     "expected_create_appointment": [{
         "Appointment_Id": 1,
         "Date_End": "2019-02-02 23:30:00",
