@@ -154,16 +154,25 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_create_appointment')
 
-
     def test_get_appointment(self, gateway_factory):
         gateway = gateway_factory()
         response = gateway.handle_request(method='GET',
                                           path='/appointments/1',
                                           headers={},
-                                          bodgit y=''
+                                          body=''
                                           )
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_get_appointment')
+
+    def test_get_appointment_by_patient(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/patient/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment_by_patient')
     #
     #
     # def test_get_appointments(self, gateway_factory):
@@ -181,11 +190,6 @@ class TestChalice(object):
     #     appointments = appointment_store.get_all_appointments()
     #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
     #
-    # @app.route('/appointments/{id}', methods=['GET'], cors=True)
-    # def get_appointment(id):
-    #     appointment_store = AppointmentStore()
-    #     appointment = appointment_store.get_appointment_by_appointment_id(id)
-    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
     #
     # @app.route('/appointments/patient/{id}', methods=['GET'], cors=True)
     # def get_appointment(id):

@@ -119,6 +119,13 @@ responses = {
         "Doctor_Id": 1,
         "Patient_Id": 1
     }],
+    "expected_create_appointment_2": [{
+        "Appointment_Id": 2,
+        "Date_End": "2019-02-04 23:30:00",
+        "Date_Start": "2019-02-04 22:30:00",
+        "Doctor_Id": 1,
+        "Patient_Id": 1
+    }],
     "expected_get_appointment": [{
         "Appointment_Id": 1,
         "Date_End": "2019-02-02 23:30:00",
@@ -126,10 +133,15 @@ responses = {
         "Doctor_Id": 1,
         "Patient_Id": 1
     }],
+    "expected_get_appointment_by_patient": [{
+            "Appointment_Id": 1,
+            "Date_End": "2019-02-02 23:30:00",
+            "Date_Start": "2019-02-01 22:30:00",
+            "Doctor_Id": 1,
+            "Patient_Id": 1
+    }],
+
 
 }
-
-
-
 def expected_response(key):
     return json.dumps(responses[key])
