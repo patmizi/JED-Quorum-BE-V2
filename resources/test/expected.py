@@ -140,6 +140,30 @@ responses = {
             "Doctor_Id": 1,
             "Patient_Id": 1
     }],
+    "expected_get_appointment_by_doctor": [{
+        "Appointment_Id": 1,
+        "Date_End": "2019-02-02 23:30:00",
+        "Date_Start": "2019-02-01 22:30:00",
+        "Doctor_Id": 1,
+        "Patient_Id": 1
+    }],
+    "expected_get_upcoming_appointments": [{
+        "Appointment_Id": 1,
+        "Date_End": "2019-02-02 23:30:00",
+        "Date_Start": "2019-02-01 22:30:00",
+        "Doctor_Id": 1,
+        "Patient_Id": 1
+    }],
+    "expected_get_upcoming_appointments_by_doctor": [{
+        "Appointment_Id": 1,
+        "Date_End": "2019-02-02 23:30:00",
+        "Date_Start": "2019-02-01 22:30:00",
+        "Doctor_Id": 1,
+        "Patient_Id": 1
+    }],
+    "expected_delete_appointment": {
+        "result": "true",
+    },
 
 
 }

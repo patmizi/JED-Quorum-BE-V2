@@ -173,50 +173,43 @@ class TestChalice(object):
                                           )
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_get_appointment_by_patient')
-    #
-    #
-    # def test_get_appointments(self, gateway_factory):
-    #     gateway = gateway_factory()
-    #     response = gateway.handle_request(method='GET',
-    #                                       path='/appointments',
-    #                                       headers={},
-    #                                       body=''
-    #                                       )
-    #     assert response['statusCode'] == 200
-    #     assert response['body'] == expected_response('expected_get_receptionist')
-    # @app.route('/appointments', methods=['GET'], cors=True)
-    # def get_appointments():
-    #     appointment_store = AppointmentStore()
-    #     appointments = appointment_store.get_all_appointments()
-    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
-    #
-    #
-    # @app.route('/appointments/patient/{id}', methods=['GET'], cors=True)
-    # def get_appointment(id):
-    #     appointment_store = AppointmentStore()
-    #     appointment = appointment_store.get_appointments_by_patient_id(id)
-    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
-    #
-    # @app.route('/appointments/doctor/{id}', methods=['GET'], cors=True)
-    # def get_appointment(id):
-    #     appointment_store = AppointmentStore()
-    #     appointment = appointment_store.get_appointments_by_doctor_id(id)
-    #     return json.dumps(appointment, cls=recursive_alchemy_encoder(), check_circular=False)
-    #
-    # @app.route('/appointments/{id}', methods=['DELETE'], cors=True)
-    # def delete_appointment(id):
-    #     appointment_store = AppointmentStore()
-    #     appointment_store.delete_appointment(id)
-    #     return {"result": "true"}
-    #
-    # @app.route('/appointments/upcoming', methods=['GET'], cors=True)
-    # def get_upcoming_appointments():
-    #     appointment_store = AppointmentStore()
-    #     appointments = appointment_store.get_all_upcoming_appointments()
-    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
-    #
-    # @app.route('/appointments/upcoming/doctor/{id}', methods=['GET'], cors=True)
-    # def get_upcoming_appointments_doctor(id):
-    #     appointment_store = AppointmentStore()
-    #     appointments = appointment_store.get_upcoming_appointments_by_doctor_id(id)
-    #     return json.dumps(appointments, cls=recursive_alchemy_encoder(), check_circular=False)
+
+    def test_get_appointment_by_doctor(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/doctor/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment_by_doctor')
+
+    def test_get_upcoming_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/upcoming',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_upcoming_appointments')
+
+    def test_get_upcoming_appointment_by_doctor(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/upcoming/doctor/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_upcoming_appointments_by_doctor')
+
+    def test_delete_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='DELETE',
+                                          path='/appointments/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_delete_appointment')
