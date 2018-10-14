@@ -101,16 +101,111 @@ update_patient_payload = {
 }
 
 create_medical_case_payload = {
-        "Patient_Id" : 1,
-        "Medical_Case_Name": "test",
-        "Medical_Case_Description": "test",
-        "doctors": []
+    "Patient_Id" : 1,
+    "Medical_Case_Name": "test",
+    "Medical_Case_Description": "test",
+    "doctors": [
+        {
+        "AddressId": 3,
+        "Contact_Number": "04000000000",
+        "Date_Of_Birth": "26/01/1997",
+        "Doctor_Id": 13,
+        "Email": "patm007@hotmail.com",
+        "First_Name": "Patrick",
+        "Gender": "M",
+        "Last_Name": "Miziewicz",
+        "User_Id": "b64bfe4a-ce81-459b-816a-a7cbb24e770d",
+        "address": {
+            "AddressId": 3,
+            "Country": "Australia",
+            "Postcode": 2000,
+            "State": "NSW",
+            "Street": "5 Main St",
+            "Suburb": "Castle Hill",
+            "Unit": ""
+        }
+    },
+    {
+        "AddressId": 6,
+        "Contact_Number": "098765432123456",
+        "Date_Of_Birth": "12/01/1993",
+        "Doctor_Id": 18,
+        "Email": "kullen.hatim@lcelandic.com",
+        "First_Name": "Test",
+        "Gender": "F",
+        "Last_Name": "Test",
+        "User_Id": "17d5b44c-1472-4445-a9d0-d63dabbe369f",
+        "address": {
+            "AddressId": 6,
+            "Country": "United States",
+            "Postcode": 10013,
+            "State": "NY",
+            "Street": "17 Greenwich St",
+            "Suburb": "",
+            "Unit": ""
+        }
+    }
+    ]
 }
 
 update_medical_case_payload = {
-        "Medical_Case_id": 1,
-        "Patient_Id" : 1,
-        "Medical_Case_Name": "updated",
-        "Medical_Case_Description": "updated"
+    "Medical_Case_Description": "test",
+    "Medical_Case_Id": 1,
+    "Medical_Case_Name": "test",
+    "Patient_Id": 1,
+    "doctors": [
+        {
+            "AddressId": 1,
+            "Contact_Number": "098765432123456",
+            "Date_Of_Birth": "12/01/1993",
+            "Doctor_Id": 1,
+            "Email": "kullen.hatim@lcelandic.com",
+            "First_Name": "Test",
+            "Gender": "F",
+            "Last_Name": "Test",
+            "User_Id": "17d5b44c-1472-4445-a9d0-d63dabbe369f",
+            "address": {
+                "AddressId": 1,
+                "Country": "United States",
+                "Postcode": 10013,
+                "State": "NY",
+                "Street": "17 Greenwich St",
+                "Suburb": "",
+                "Unit": ""
+            },
+            "medical_cases": []
+        }
+    ],
+    "patient": {
+        "AddressId": 1,
+        "Contact_Number": "0400000000",
+        "Date_Of_Birth": "11/11/1990",
+        "Email": "ajsdlakjsd@lakjdlakjdklsa.com",
+        "First_Name": "UPDATED1231eqqsdasd",
+        "Gender": "F",
+        "Last_Name": "TESTaaaaafg",
+        "Patient_Id": 1,
+        "address": {
+            "AddressId": 1,
+            "Country": "United States",
+            "Postcode": 10010,
+            "State": "NY",
+            "Street": "12 Lexington Ave",
+            "Suburb": "",
+            "Unit": ""
+        }
+    }
 }
+
+#
+# Appointment Test cases
+#
+create_appointment_payload = {
+        "Patient_Id":1,
+        "Doctor_Id":1,
+        "Start_Date":"01/02/2019 22:30:00",
+        "End_Date":"02/02/2019 23:30:00"
+}
+
+
 
