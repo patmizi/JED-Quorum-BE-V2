@@ -2,7 +2,7 @@ import json
 import os
 import pytest
 from app import app
-from resources.test.payloads import register_doctor_payload, register_receptionist_payload, add_patient_payload, update_patient_payload, create_medical_case_payload, update_medical_case_payload
+from resources.test.payloads import *
 from resources.test.headers import common_post_header
 from resources.test.expected import expected_response
 
@@ -115,7 +115,6 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_update_patient')
 
-    @pytest.mark.skip(reason="Not implemented")
     def test_create_medical_case(self, gateway_factory):
         gateway = gateway_factory()
         payload = json.dumps(create_medical_case_payload)
@@ -127,10 +126,10 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_create_medical_case')
 
-    @pytest.mark.skip(reason="Not implemented yet")
+
     def test_update_medical_case(self, gateway_factory):
         gateway = gateway_factory()
-        payload = json.dumps(create_medical_case_payload)
+        payload = json.dumps(update_medical_case_payload)
         response = gateway.handle_request(method='POST',
                                           path='/cases',
                                           headers=common_post_header,
@@ -139,3 +138,77 @@ class TestChalice(object):
         assert response['statusCode'] == 200
         assert response['body'] == expected_response('expected_update_medical_case')
 
+
+#
+# Appointments
+#
+    def test_create_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        payload = json.dumps(create_appointment_payload)
+        response = gateway.handle_request(method='POST',
+                                          path='/appointments',
+                                          headers=common_post_header,
+                                          body=payload
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_create_appointment')
+
+    def test_get_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment')
+
+    def test_get_appointment_by_patient(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/patient/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment_by_patient')
+
+    def test_get_appointment_by_doctor(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/doctor/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_appointment_by_doctor')
+
+    def test_get_upcoming_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/upcoming',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_upcoming_appointments')
+
+    def test_get_upcoming_appointment_by_doctor(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='GET',
+                                          path='/appointments/upcoming/doctor/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_get_upcoming_appointments_by_doctor')
+
+    def test_delete_appointment(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='DELETE',
+                                          path='/appointments/1',
+                                          headers={},
+                                          body=''
+                                          )
+        assert response['statusCode'] == 200
+        assert response['body'] == expected_response('expected_delete_appointment')
