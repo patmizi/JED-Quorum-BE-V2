@@ -175,6 +175,7 @@ def get_receptionists():
 def register_user():
     print("[*] Registering new user...")
     user_json = app.current_request.json_body
+    print(user_json)
     user_metadata = user_json['user']['user_metadata']
     data = {"User_Id": user_json['user']['id']}
     if 'address' in user_metadata:
